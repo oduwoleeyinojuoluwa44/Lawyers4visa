@@ -54,6 +54,9 @@ const serviceCards = [
   }
 ];
 
+const topServiceCards = serviceCards.slice(0, 2);
+const bottomServiceCards = serviceCards.slice(2);
+
 const faqItems = [
   {
     question: "Can you represent me if I am outside the UK?",
@@ -126,11 +129,29 @@ const consultationCards = [
 ];
 
 const socialLinks = [
-  { label: "X", href: "#" },
-  { label: "IG", href: "#" },
-  { label: "FB", href: "#" },
-  { label: "IN", href: "#" }
+  {
+    label: "X",
+    href: "#",
+    icon: `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 5.5 18 18.5M18 5.5 6 18.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>`
+  },
+  {
+    label: "Instagram",
+    href: "#",
+    icon: `<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5.25" y="5.25" width="13.5" height="13.5" rx="4" fill="none" stroke="currentColor" stroke-width="1.5"/><circle cx="12" cy="12" r="3.25" fill="none" stroke="currentColor" stroke-width="1.5"/><circle cx="16.6" cy="7.4" r="0.8" fill="currentColor"/></svg>`
+  },
+  {
+    label: "Facebook",
+    href: "#",
+    icon: `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14.2 8.1h2.2V5.4h-2.2c-2.2 0-3.7 1.5-3.7 3.8v1.9H8.3v2.7h2.2v4.8h2.8v-4.8h2.5l.3-2.7h-2.8V9.5c0-.9.4-1.4 1.2-1.4Z" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></svg>`
+  },
+  {
+    label: "LinkedIn",
+    href: "#",
+    icon: `<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5.25" y="5.25" width="13.5" height="13.5" rx="3" fill="none" stroke="currentColor" stroke-width="1.4"/><path d="M9 10.3v5.2M9 8.3a.8.8 0 1 0 0 1.6.8.8 0 0 0 0-1.6Zm2.8 7.2v-3c0-1.2.7-2 1.8-2s1.6.7 1.6 2v3" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>`
+  }
 ];
+
+const chevronDownIcon = `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m7 10 5 5 5-5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
 
 const iconSprites = {
   building: `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 18.5V7.5h8v11M9 18.5V4.5h10v14M3 18.5h18M7.5 10h1M7.5 13h1M11.5 7.5h1M11.5 10.5h1M15.5 7.5h1M15.5 10.5h1M15.5 13.5h1" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
@@ -162,7 +183,10 @@ const iconSprites = {
           }
         </nav>
 
-        <a class="lv-button lv-button--header" href="#consultations">Book Consultation</a>
+        <a class="lv-button lv-button--header lv-button--header-cta" href="#consultations">
+          <span>Book Consultation</span>
+          <span class="lv-button__icon" set:html={chevronDownIcon} />
+        </a>
 
         <details class="lv-mobile-menu">
           <summary aria-label="Open navigation menu">
@@ -186,6 +210,7 @@ const iconSprites = {
     <main class="lv-main">
       <section class="lv-hero" aria-label="Homepage hero">
         <img class="lv-hero__image" src={heroImage} alt="" loading="eager" />
+        <div class="lv-hero__halo" aria-hidden="true"></div>
         <div class="lv-hero__mist" aria-hidden="true"></div>
 
         <div class="lv-shell lv-hero__shell">
@@ -235,11 +260,19 @@ const iconSprites = {
           <div class="lv-stats__values">
             <article>
               <strong>22+</strong>
-              <span>Years Of Immigration Law Experience.</span>
+              <span>
+                Years Of Immigration
+                <br />
+                Law Experience.
+              </span>
             </article>
             <article>
               <strong>432+</strong>
-              <span>Official Cases Handled</span>
+              <span>
+                Official Cases
+                <br />
+                Handled
+              </span>
             </article>
           </div>
 
@@ -251,78 +284,122 @@ const iconSprites = {
 
       <section class="lv-section" id="services">
         <div class="lv-shell">
-          <div class="lv-heading lv-heading--left">
+          <div class="lv-heading lv-heading--left lv-heading--services">
             <p class="lv-kicker">Services</p>
-            <h2>What Can This Firm Help Me With?</h2>
-            <p>End-To-End Legal Support, From Application Through Appeal.</p>
+            <div class="lv-heading__content">
+              <h2>
+                What Can This Firm
+                <br />
+                Help Me With?
+              </h2>
+              <p>End-To-End Legal Support, From Application Through Appeal.</p>
+            </div>
           </div>
 
           <div class="lv-service-grid">
-            {
-              serviceCards.map((card) => (
-                <article class="lv-service-card">
-                  <span class="lv-service-card__icon" set:html={iconSprites[card.icon]} />
-                  <h3>{card.title}</h3>
-                  <p>{card.description}</p>
-                </article>
-              ))
-            }
+            <div class="lv-service-grid__row">
+              {
+                topServiceCards.map((card) => (
+                  <article class="lv-service-card">
+                    <span class="lv-service-card__icon" set:html={iconSprites[card.icon]} />
+                    <div class="lv-service-card__content">
+                      <h3>{card.title}</h3>
+                      <p>{card.description}</p>
+                    </div>
+                  </article>
+                ))
+              }
+            </div>
+            <div class="lv-service-grid__row lv-service-grid__row--last">
+              {
+                bottomServiceCards.map((card) => (
+                  <article class="lv-service-card">
+                    <span class="lv-service-card__icon" set:html={iconSprites[card.icon]} />
+                    <div class="lv-service-card__content">
+                      <h3>{card.title}</h3>
+                      <p>{card.description}</p>
+                    </div>
+                  </article>
+                ))
+              }
+            </div>
           </div>
         </div>
       </section>
 
       <section class="lv-section lv-section--audiences">
         <div class="lv-shell">
-          <div class="lv-heading lv-heading--center">
+          <div class="lv-heading lv-heading--center lv-heading--audiences">
             <p class="lv-kicker">Who We Serve</p>
-            <h2>Who We Work With</h2>
-            <p>
-              Our practice serves two principal client categories, each requiring tailored legal
-              expertise and strategic immigration planning.
-            </p>
+            <div class="lv-heading__content">
+              <h2>Who We Work With</h2>
+              <p>
+                Our practice serves <strong>two principal client categories</strong>, each requiring
+                tailored legal expertise and strategic immigration planning.
+              </p>
+            </div>
           </div>
 
-          <article class="lv-audience">
+          <article class="lv-audience lv-audience--corporate">
             <div class="lv-audience__media lv-audience__media--corporate" aria-hidden="true">
               <img class="lv-audience__primary" src={ukDeskImage} alt="" loading="lazy" />
               <img class="lv-audience__secondary" src={libraryOfficeImage} alt="" loading="lazy" />
             </div>
 
-            <div class="lv-audience__copy">
-              <h3>Corporate Organisations</h3>
-              <p>
-                We advise UK and international businesses on sponsor licence applications, compliance
-                obligations, Skilled Worker visa sponsorship, senior or specialist worker routes, and
-                intra-company transfer policies.
-              </p>
-              <p>
-                Our corporate immigration service includes compliance audits, Home Office liaison, and
-                defence against sponsor licence suspension or revocation.
-              </p>
+            <div class="lv-audience__copy lv-audience__copy--corporate">
+              <div class="lv-audience__copy-stack">
+                <h3>
+                  Corporate
+                  <br />
+                  Organisations
+                </h3>
+                <div class="lv-audience__body">
+                  <p>
+                    We advise UK and international businesses on sponsor licence applications,
+                    compliance obligations, Skilled Worker visa sponsorship, senior or specialist
+                    worker routes, and intra-company transfer policies.
+                  </p>
+                  <p>
+                    Our corporate immigration service includes compliance audits, Home Office
+                    liaison, and defence against sponsor licence suspension or revocation.
+                  </p>
+                </div>
+              </div>
               <a class="lv-button lv-button--solid lv-button--small" href="#consultations">
                 Book Consultation
               </a>
             </div>
           </article>
 
-          <article class="lv-audience lv-audience--reverse">
+          <article class="lv-audience lv-audience--private-row lv-audience--reverse">
             <div class="lv-audience__media lv-audience__media--private" aria-hidden="true">
               <img class="lv-audience__primary" src={boardroomImage} alt="" loading="lazy" />
               <img class="lv-audience__secondary" src={legalCloseupImage} alt="" loading="lazy" />
             </div>
 
-            <div class="lv-audience__copy">
-              <h3>Private Clients And High-Net-Worth Individuals</h3>
-              <p>
-                The firm advises private clients, including high-net-worth individuals, on complex UK
-                immigration matters requiring structured legal analysis and strategic planning.
-              </p>
-              <p>
-                Such matters frequently involve business, visitor, family, or settlement applications,
-                family-based immigration, and cases engaging human rights considerations. In many
-                instances, applicants require carefully prepared representations in addition to detailed
-                evidential requirements, prior immigration history, or compliance issues.
-              </p>
+            <div class="lv-audience__copy lv-audience__copy--private">
+              <div class="lv-audience__copy-stack">
+                <h3>
+                  Private Clients And
+                  <br />
+                  High-Net-Worth
+                  <br />
+                  Individuals
+                </h3>
+                <div class="lv-audience__body">
+                  <p>
+                    The firm advises private clients, including high-net-worth individuals, on complex
+                    UK immigration matters requiring structured legal analysis and strategic planning.
+                  </p>
+                  <p>
+                    Such matters frequently involve business, visitor, family, or settlement
+                    applications, family-based immigration, and cases engaging human rights
+                    considerations. In many instances, applicants require carefully prepared
+                    representations in addition to detailed evidential requirements, prior immigration
+                    history, or compliance issues.
+                  </p>
+                </div>
+              </div>
               <a class="lv-button lv-button--solid lv-button--small" href="#consultations">
                 Book Consultation
               </a>
@@ -333,7 +410,13 @@ const iconSprites = {
 
       <section class="lv-section" id="uk-advice">
         <div class="lv-shell lv-why">
-          <h2>Why UK-Based Advice Matters?</h2>
+          <div class="lv-why__heading">
+            <h2>
+              Why
+              <br />
+              <span>UK-Based Advice Matters?</span>
+            </h2>
+          </div>
 
           <div class="lv-why__copy">
             <p>
@@ -363,42 +446,51 @@ const iconSprites = {
 
       <section class="lv-section" id="nigeria-office">
         <div class="lv-shell lv-office">
-          <p class="lv-office__intro">
-            We maintain a representative office in Lagos, Nigeria to facilitate client consultations and
-            document collection for Nigerian nationals applying for UK visas. This office operates under
-            the legal and strategic direction of our UK practice.
-          </p>
+          <div class="lv-office__top">
+            <p class="lv-office__intro">
+              We maintain a representative office in Lagos, Nigeria to facilitate client consultations
+              and document collection for Nigerian nationals applying for UK visas. This office operates
+              under the legal and strategic direction of our UK practice.
+            </p>
 
-          <h2>Nigeria Representative Office</h2>
-
-          <div class="lv-office__media">
-            <img src={visaImage} alt="Passport and visa application documents" loading="lazy" />
+            <h2>
+              Nigeria <span>Representative Office</span>
+            </h2>
           </div>
 
-          <div class="lv-office__copy">
-            <p>
-              All legal advice, application preparation, and Home Office liaison is conducted from our UK
-              base. The Nigeria office serves as a client liaison point only and does not provide
-              independent legal advice or representation.
-            </p>
-            <p>
-              This structure ensures that all cases are managed in accordance with UK immigration law and
-              professional standards, while providing accessible support for clients based in West Africa.
-            </p>
-            <p>
-              Clients consulting through our Nigeria office receive the same UK-based legal service as
-              clients consulting directly in the UK.
-            </p>
-            <a class="lv-button lv-button--solid lv-button--small" href="#consultations">
-              Book Consultation
-            </a>
+          <div class="lv-office__bottom">
+            <div class="lv-office__media">
+              <img src={visaImage} alt="Passport and visa application documents" loading="lazy" />
+            </div>
+
+            <div class="lv-office__content">
+              <div class="lv-office__copy">
+                <p>
+                  All legal advice, application preparation, and Home Office liaison is conducted from our
+                  UK base. The Nigeria office serves as a client liaison point only and does not provide
+                  independent legal advice or representation.
+                </p>
+                <p>
+                  This structure ensures that all cases are managed in accordance with UK immigration law
+                  and professional standards, while providing accessible support for clients based in West
+                  Africa.
+                </p>
+                <p>
+                  Clients consulting through our Nigeria office receive the same UK-based legal service as
+                  clients consulting directly in the UK.
+                </p>
+              </div>
+              <a class="lv-button lv-button--solid lv-button--small" href="#consultations">
+                Book Consultation
+              </a>
+            </div>
           </div>
         </div>
       </section>
 
       <section class="lv-section lv-section--faq" id="faq">
         <div class="lv-shell">
-          <div class="lv-heading lv-heading--center">
+          <div class="lv-heading lv-heading--center lv-heading--faq">
             <h2>Frequently Asked Questions</h2>
             <p>
               Detailed answers to common questions about UK immigration law, visa applications, and our
@@ -453,17 +545,21 @@ const iconSprites = {
 
     <footer class="lv-footer">
       <div class="lv-shell lv-footer__shell">
-        <div class="lv-footer__top">
-          <p>&copy; 2026 Immigration Law Specialists. All rights reserved.</p>
-          <p>Authorised and regulated by the relevant UK legal regulatory bodies.</p>
-        </div>
+        <div class="lv-footer__primary">
+          <div class="lv-footer__top">
+            <p>&copy; 2026 Immigration Law Specialists. All rights reserved.</p>
+            <p>Authorised and regulated by the relevant UK legal regulatory bodies.</p>
+          </div>
 
-        <div class="lv-footer__socials" aria-label="Social links">
-          {
-            socialLinks.map((item) => (
-              <a href={item.href} aria-label={item.label}>{item.label}</a>
-            ))
-          }
+          <div class="lv-footer__socials" aria-label="Social links">
+            {
+              socialLinks.map((item) => (
+                <a href={item.href} aria-label={item.label}>
+                  <span set:html={item.icon} />
+                </a>
+              ))
+            }
+          </div>
         </div>
 
         <div class="lv-footer__offices">

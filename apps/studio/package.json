@@ -1,0 +1,23 @@
+{
+  "name": "@lawyers4visa/studio",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "sanity dev",
+    "build": "sanity build",
+    "lint": "eslint . --config ../../packages/config-eslint/base.mjs",
+    "typecheck": "tsc --project tsconfig.json --noEmit"
+  },
+  "dependencies": {
+    "@lawyers4visa/content": "workspace:*",
+    "react": "latest",
+    "react-dom": "latest",
+    "sanity": "latest",
+    "styled-components": "^6.3.11"
+  },
+  "devDependencies": {
+    "eslint": "latest",
+    "typescript": "latest"
+  }
+}

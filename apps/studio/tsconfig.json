@@ -1,0 +1,9 @@
+{
+  "extends": "../../packages/config-typescript/sanity.json",
+  "include": [
+    "sanity.config.ts",
+    "sanity.cli.ts",
+    "schemas"
+  ]
+}
+

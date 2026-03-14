@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "strict": true,
+    "noEmit": true,
+    "verbatimModuleSyntax": true,
+    "forceConsistentCasingInFileNames": true,
+    "skipLibCheck": true,
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
+    "baseUrl": ".",
+    "paths": {
+      "@lawyers4visa/content": [
+        "packages/content/src/index.ts"
+      ],
+      "@lawyers4visa/theme": [
+        "packages/theme/src/index.ts"
+      ],
+      "@lawyers4visa/theme/index.css": [
+        "packages/theme/src/index.css"
+      ]
+    }
+  }
+}
+

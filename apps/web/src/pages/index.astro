@@ -1,0 +1,482 @@
+---
+import "@lawyers4visa/theme/index.css";
+import { siteMetadata } from "@lawyers4visa/content";
+
+import heroImage from "../../../../design/png/assets/Modern_uk_law_2k_202602091734 2.png?url";
+import londonImage from "../../../../design/png/assets/vertical-view-victoria-tower-located-palace-westminster-london-downtown-united-kingdom-blue-sky-with-flying-plane-background 1.png?url";
+import libraryOfficeImage from "../../../../design/png/assets/Modern_uk_law_2k_202602091734 1.png?url";
+import meetingImage from "../../../../design/png/assets/Change_the_man_2k_202602101246 1.png?url";
+import legalCloseupImage from "../../../../design/png/assets/Closeup_of_legal_2k_202602110034 1.png?url";
+import ukDeskImage from "../../../../design/png/assets/Image_fx (37) 1.png?url";
+import boardroomImage from "../../../../design/png/assets/Professional_corporate_boardroom_2k_202602101 1.png?url";
+import visaImage from "../../../../design/png/assets/visa-application-composition-with-australian-flag 1.png?url";
+import globeImage from "../../../../design/png/assets/home-globe-crop.png?url";
+
+const desktopLinks = [
+  { label: "About us", href: "#about" },
+  { label: "Immigration insights", href: "#faq" },
+  { label: "How we work", href: "#uk-advice" },
+  { label: "Service", href: "#services" }
+];
+
+const mobileLinks = [
+  { label: "About us", href: "#about" },
+  { label: "Immigration insights", href: "#faq" },
+  { label: "How we work", href: "#uk-advice" },
+  { label: "Service", href: "#services" },
+  { label: "Legal and compliance", href: "#consultations" }
+];
+
+const serviceCards = [
+  {
+    title: "Corporate Immigration Services",
+    description:
+      "Strategic UK immigration advice for employers, sponsor licence holders, and businesses expanding into the United Kingdom.",
+    icon: "building" as const
+  },
+  {
+    title: "Visa Application Services",
+    description:
+      "Preparation and submission of UK visa applications across business, family, student, and visitor categories.",
+    icon: "document" as const
+  },
+  {
+    title: "Immigration Appeals",
+    description:
+      "Representation before UK immigration tribunals and higher courts in refusal and appeal matters.",
+    icon: "scales" as const
+  },
+  {
+    title: "Representations And Administrative Review",
+    description:
+      "Challenging visa refusals and adverse Home Office decisions through formal representations and review procedures.",
+    icon: "brief" as const
+  }
+];
+
+const faqItems = [
+  {
+    question: "Can you represent me if I am outside the UK?",
+    answer:
+      "Yes. We represent clients both in the UK and abroad. Our Nigeria office facilitates consultations for West African clients, but all legal work is conducted from our UK practice. We communicate by secure email, video conference, and telephone, and we manage the entire application process on your behalf, including submission to the relevant UK authorities."
+  },
+  {
+    question: "Do I need a solicitor for my visa application?",
+    answer:
+      "You are not legally required to instruct a solicitor, and many applicants successfully apply without legal representation. However, immigration matters are complex, and errors in application preparation or document submission can result in costly refusals. Legal representation is particularly advisable for business routes, family migration, prior refusals, or any matter requiring detailed legal submissions."
+  },
+  {
+    question: "Can I switch to a different visa category while in the UK?",
+    answer:
+      "It depends on your current immigration status and the route you intend to switch into. Some categories permit in-country switching, while others require departure and re-entry. We assess eligibility, timing, and documentary requirements before advising on the correct next step."
+  },
+  {
+    question: "Can you guarantee that my visa will be approved?",
+    answer:
+      "No. Immigration decisions are made by the Home Office, Entry Clearance Officers, or tribunal judges, who operate independently. We provide legal representation and prepare applications to the highest professional standard, but we cannot control or guarantee the outcome. We will, however, provide you with a realistic assessment of your case prospects based on our experience and knowledge of current Home Office practice."
+  },
+  {
+    question: "What documents will I need to provide?",
+    answer:
+      "The document list depends on the visa category, the applicant's circumstances, and any prior immigration history. We give a structured checklist after the initial assessment and review documents for evidential consistency before submission."
+  },
+  {
+    question: "How do I know if I qualify for a UK visa?",
+    answer:
+      "Qualification depends on the route, your objective, your immigration history, and the evidence you can provide. The right starting point is a structured consultation so we can identify the strongest category and assess legal risk early."
+  },
+  {
+    question: "What should I expect in an initial consultation?",
+    answer:
+      "An initial consultation is a focused legal review of your circumstances, the route under consideration, and the likely next steps. We identify risks, explain the required documents, and advise whether the matter should proceed as a full instruction."
+  },
+  {
+    question: "What happens if my visa application is refused?",
+    answer:
+      "The refusal should be reviewed carefully against the application record and the reasons given. Depending on the route, the next step may be an appeal, an administrative review, fresh representations, or a stronger re-application."
+  },
+  {
+    question: "How much do your services cost?",
+    answer:
+      "Our fees depend on the complexity of the matter and the level of work required. We provide written fee estimates following the initial consultation, once the scope of work has been assessed. Home Office fees, priority services, and other third-party costs are charged separately where relevant."
+  }
+];
+
+const consultationCards = [
+  {
+    title: "Purpose of Consultation",
+    description:
+      "An initial consultation allows us to assess your immigration matter, explain the legal requirements and process, and provide preliminary advice on your case prospects.\n\nThis is not a guarantee of outcome, but a professional assessment based on the information you provide."
+  },
+  {
+    title: "Fee Structure",
+    description:
+      "Our fees are based on the complexity and scope of work required. Following an initial consultation, we provide a written fee estimate detailing the work to be undertaken and the applicable charges.\n\nFees are charged separately from Home Office application fees, biometric enrolment fees, or Immigration Health Surcharge payments, which are set by the UK government."
+  },
+  {
+    title: "Payment Terms",
+    description:
+      "Legal and consultation fees are agreed before substantive work begins. Complex matters may be divided into stages so that preparation, filing, and post-decision advisory are clearly scoped.\n\nThis allows clients to understand the structure of the work before full instruction."
+  },
+  {
+    title: "Disbursements",
+    description:
+      "Our fees are based on the complexity and scope of work required. Following an initial consultation, we provide a written fee estimate detailing the work to be undertaken and the applicable charges.\n\nWhere expert reports, translation, interpreter services, or other third-party costs are required, these are listed separately."
+  }
+];
+
+const socialLinks = [
+  { label: "X", href: "#" },
+  { label: "IG", href: "#" },
+  { label: "FB", href: "#" },
+  { label: "IN", href: "#" }
+];
+
+const iconSprites = {
+  building: `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 18.5V7.5h8v11M9 18.5V4.5h10v14M3 18.5h18M7.5 10h1M7.5 13h1M11.5 7.5h1M11.5 10.5h1M15.5 7.5h1M15.5 10.5h1M15.5 13.5h1" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
+  document: `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 3.5h6l4 4v13H8zM14 3.5v4h4M10.5 12h5M10.5 15h5M10.5 18h3.5" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
+  scales: `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4.5v14M8 7.5h8M5.5 19.5h13M7 7.5 4.5 12h5L7 7.5Zm10 0L14.5 12h5L17 7.5Z" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
+  brief: `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8.5 7V5.5h7V7M4.5 8h15v10.5h-15zm0 4h15M10.5 12.5h3" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>`
+};
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{siteMetadata.title} | UK Immigration Law Specialists</title>
+    <meta name="description" content={siteMetadata.description} />
+    <meta name="theme-color" content="#ffffff" />
+  </head>
+  <body class="homepage" id="top">
+    <header class="lv-header">
+      <div class="lv-shell lv-header__shell">
+        <a class="lv-brand" href="#top" aria-label="LawyerForVisa home">LawyerForVisa</a>
+
+        <nav class="lv-nav" aria-label="Primary navigation">
+          {
+            desktopLinks.map((link) => (
+              <a href={link.href}>{link.label}</a>
+            ))
+          }
+        </nav>
+
+        <a class="lv-button lv-button--header" href="#consultations">Book Consultation</a>
+
+        <details class="lv-mobile-menu">
+          <summary aria-label="Open navigation menu">
+            <span></span>
+            <span></span>
+            <span></span>
+          </summary>
+
+          <nav class="lv-mobile-menu__panel" aria-label="Mobile navigation">
+            <a class="lv-mobile-menu__brand" href="#top">LawyerForVisa</a>
+            {
+              mobileLinks.map((link) => (
+                <a href={link.href}>{link.label}</a>
+              ))
+            }
+          </nav>
+        </details>
+      </div>
+    </header>
+
+    <main class="lv-main">
+      <section class="lv-hero" aria-label="Homepage hero">
+        <img class="lv-hero__image" src={heroImage} alt="" loading="eager" />
+        <div class="lv-hero__mist" aria-hidden="true"></div>
+
+        <div class="lv-shell lv-hero__shell">
+          <div class="lv-hero__panel">
+            <h1>UK Immigration Law Specialists Advisory</h1>
+            <p>
+              A UK-based immigration law firm advising corporate organisations and private clients on
+              complex visa applications and appeals.
+            </p>
+
+            <div class="lv-hero__actions">
+              <a class="lv-button lv-button--solid" href="#consultations">Book Consultation</a>
+              <a class="lv-button lv-button--ghost" href="#services">View Our Services</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="lv-section lv-section--intro" id="about">
+        <div class="lv-shell lv-intro">
+          <div class="lv-intro__collage" aria-hidden="true">
+            <img class="lv-intro__tower" src={londonImage} alt="" loading="lazy" />
+            <img class="lv-intro__library" src={libraryOfficeImage} alt="" loading="lazy" />
+            <img class="lv-intro__closeup" src={legalCloseupImage} alt="" loading="lazy" />
+            <img class="lv-intro__meeting" src={meetingImage} alt="" loading="lazy" />
+            <img class="lv-intro__circle" src={ukDeskImage} alt="" loading="lazy" />
+          </div>
+
+          <div class="lv-intro__copy">
+            <h2>Unparalleled Experience In UK Immigration Law</h2>
+            <p>
+              Yemi Oguntolu and Co is an established UK-based specialist immigration law firm with
+              extensive expertise in UK immigration law and practice.
+            </p>
+            <p>
+              The principal partner has appeared in all tiers of the Immigration and Asylum Chamber and
+              has previously represented the Secretary of State in immigration cases, providing the firm
+              with unparalleled credibility and depth of knowledge in this field.
+            </p>
+            <a class="lv-button lv-button--solid lv-button--small" href="#uk-advice">Read More</a>
+          </div>
+        </div>
+      </section>
+
+      <section class="lv-section lv-section--stats">
+        <div class="lv-shell lv-stats">
+          <div class="lv-stats__values">
+            <article>
+              <strong>22+</strong>
+              <span>Years Of Immigration Law Experience.</span>
+            </article>
+            <article>
+              <strong>432+</strong>
+              <span>Official Cases Handled</span>
+            </article>
+          </div>
+
+          <div class="lv-stats__globe">
+            <img src={globeImage} alt="Illustrated globe highlighting the United Kingdom" loading="lazy" />
+          </div>
+        </div>
+      </section>
+
+      <section class="lv-section" id="services">
+        <div class="lv-shell">
+          <div class="lv-heading lv-heading--left">
+            <p class="lv-kicker">Services</p>
+            <h2>What Can This Firm Help Me With?</h2>
+            <p>End-To-End Legal Support, From Application Through Appeal.</p>
+          </div>
+
+          <div class="lv-service-grid">
+            {
+              serviceCards.map((card) => (
+                <article class="lv-service-card">
+                  <span class="lv-service-card__icon" set:html={iconSprites[card.icon]} />
+                  <h3>{card.title}</h3>
+                  <p>{card.description}</p>
+                </article>
+              ))
+            }
+          </div>
+        </div>
+      </section>
+
+      <section class="lv-section lv-section--audiences">
+        <div class="lv-shell">
+          <div class="lv-heading lv-heading--center">
+            <p class="lv-kicker">Who We Serve</p>
+            <h2>Who We Work With</h2>
+            <p>
+              Our practice serves two principal client categories, each requiring tailored legal
+              expertise and strategic immigration planning.
+            </p>
+          </div>
+
+          <article class="lv-audience">
+            <div class="lv-audience__media lv-audience__media--corporate" aria-hidden="true">
+              <img class="lv-audience__primary" src={ukDeskImage} alt="" loading="lazy" />
+              <img class="lv-audience__secondary" src={libraryOfficeImage} alt="" loading="lazy" />
+            </div>
+
+            <div class="lv-audience__copy">
+              <h3>Corporate Organisations</h3>
+              <p>
+                We advise UK and international businesses on sponsor licence applications, compliance
+                obligations, Skilled Worker visa sponsorship, senior or specialist worker routes, and
+                intra-company transfer policies.
+              </p>
+              <p>
+                Our corporate immigration service includes compliance audits, Home Office liaison, and
+                defence against sponsor licence suspension or revocation.
+              </p>
+              <a class="lv-button lv-button--solid lv-button--small" href="#consultations">
+                Book Consultation
+              </a>
+            </div>
+          </article>
+
+          <article class="lv-audience lv-audience--reverse">
+            <div class="lv-audience__media lv-audience__media--private" aria-hidden="true">
+              <img class="lv-audience__primary" src={boardroomImage} alt="" loading="lazy" />
+              <img class="lv-audience__secondary" src={legalCloseupImage} alt="" loading="lazy" />
+            </div>
+
+            <div class="lv-audience__copy">
+              <h3>Private Clients And High-Net-Worth Individuals</h3>
+              <p>
+                The firm advises private clients, including high-net-worth individuals, on complex UK
+                immigration matters requiring structured legal analysis and strategic planning.
+              </p>
+              <p>
+                Such matters frequently involve business, visitor, family, or settlement applications,
+                family-based immigration, and cases engaging human rights considerations. In many
+                instances, applicants require carefully prepared representations in addition to detailed
+                evidential requirements, prior immigration history, or compliance issues.
+              </p>
+              <a class="lv-button lv-button--solid lv-button--small" href="#consultations">
+                Book Consultation
+              </a>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="lv-section" id="uk-advice">
+        <div class="lv-shell lv-why">
+          <h2>Why UK-Based Advice Matters?</h2>
+
+          <div class="lv-why__copy">
+            <p>
+              UK immigration law is complex, frequently amended, and subject to detailed policy guidance
+              that is not always publicly accessible. Entry Clearance Officers and Home Office caseworkers
+              apply immigration rules in conjunction with internal guidance documents, Home Office
+              discretion, and country-specific policy notes.
+            </p>
+            <p>
+              Our practice is based in the UK, providing direct access to the UK legal framework,
+              tribunal decisions, and Home Office operational procedures. We are familiar with current
+              refusal trends, evidential standards applied by decision-makers, and the practical aspects
+              of immigration compliance.
+            </p>
+            <p>
+              This grounding in UK legal practice enables us to provide realistic assessments of
+              prospects, anticipate decision-maker concerns, and structure applications to meet the
+              technical and evidential requirements of the immigration rules.
+            </p>
+            <p>
+              We do not provide overseas representation that is disconnected from UK legal realities. Our
+              advice is UK-centred, legally informed, and aligned with current Home Office practice.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section class="lv-section" id="nigeria-office">
+        <div class="lv-shell lv-office">
+          <p class="lv-office__intro">
+            We maintain a representative office in Lagos, Nigeria to facilitate client consultations and
+            document collection for Nigerian nationals applying for UK visas. This office operates under
+            the legal and strategic direction of our UK practice.
+          </p>
+
+          <h2>Nigeria Representative Office</h2>
+
+          <div class="lv-office__media">
+            <img src={visaImage} alt="Passport and visa application documents" loading="lazy" />
+          </div>
+
+          <div class="lv-office__copy">
+            <p>
+              All legal advice, application preparation, and Home Office liaison is conducted from our UK
+              base. The Nigeria office serves as a client liaison point only and does not provide
+              independent legal advice or representation.
+            </p>
+            <p>
+              This structure ensures that all cases are managed in accordance with UK immigration law and
+              professional standards, while providing accessible support for clients based in West Africa.
+            </p>
+            <p>
+              Clients consulting through our Nigeria office receive the same UK-based legal service as
+              clients consulting directly in the UK.
+            </p>
+            <a class="lv-button lv-button--solid lv-button--small" href="#consultations">
+              Book Consultation
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <section class="lv-section lv-section--faq" id="faq">
+        <div class="lv-shell">
+          <div class="lv-heading lv-heading--center">
+            <h2>Frequently Asked Questions</h2>
+            <p>
+              Detailed answers to common questions about UK immigration law, visa applications, and our
+              legal services.
+            </p>
+          </div>
+
+          <div class="lv-faq-grid">
+            {
+              faqItems.map((item) => (
+                <details class="lv-faq-item">
+                  <summary>{item.question}</summary>
+                  <p>{item.answer}</p>
+                </details>
+              ))
+            }
+          </div>
+        </div>
+      </section>
+
+      <section class="lv-section" id="consultations">
+        <div class="lv-shell">
+          <div class="lv-heading lv-heading--center lv-heading--consultations">
+            <h2>Consultations & Fees</h2>
+          </div>
+
+          <div class="lv-consultation-grid">
+            {
+              consultationCards.map((item) => (
+                <article class="lv-consultation-card">
+                  <h3>{item.title}</h3>
+                  {item.description.split("\n\n").map((paragraph) => <p>{paragraph}</p>)}
+                </article>
+              ))
+            }
+          </div>
+        </div>
+      </section>
+
+      <section class="lv-cta-band">
+        <div class="lv-shell lv-cta-band__shell">
+          <h2>Discuss Your UK Immigration Matter With A Specialist</h2>
+          <p>
+            Whether you require advice on visa applications, sponsor licence compliance, refusal
+            response, or tribunal representation, we provide UK-based legal expertise grounded in
+            immigration law and Home Office practice.
+          </p>
+          <a class="lv-button lv-button--cta" href="#consultations">Book Consultation</a>
+        </div>
+      </section>
+    </main>
+
+    <footer class="lv-footer">
+      <div class="lv-shell lv-footer__shell">
+        <div class="lv-footer__top">
+          <p>&copy; 2026 Immigration Law Specialists. All rights reserved.</p>
+          <p>Authorised and regulated by the relevant UK legal regulatory bodies.</p>
+        </div>
+
+        <div class="lv-footer__socials" aria-label="Social links">
+          {
+            socialLinks.map((item) => (
+              <a href={item.href} aria-label={item.label}>{item.label}</a>
+            ))
+          }
+        </div>
+
+        <div class="lv-footer__offices">
+          <article>
+            <h3>Nigeria Office Address:</h3>
+            <p>Lagos, Nigeria. Meetings arranged by appointment.</p>
+          </article>
+          <article>
+            <h3>UK Office Address:</h3>
+            <p>United Kingdom. Case strategy and legal work managed from the UK.</p>
+          </article>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

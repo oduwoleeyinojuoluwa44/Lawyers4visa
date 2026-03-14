@@ -1,0 +1,23 @@
+{
+  "name": "@lawyers4visa/web",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "lint": "eslint . --config ../../packages/config-eslint/base.mjs",
+    "typecheck": "astro check"
+  },
+  "dependencies": {
+    "@lawyers4visa/content": "workspace:*",
+    "@lawyers4visa/theme": "workspace:*",
+    "astro": "latest"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.7",
+    "eslint": "latest",
+    "typescript": "latest"
+  }
+}

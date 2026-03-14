@@ -1,0 +1,12 @@
+{
+  "name": "@lawyers4visa/config-typescript",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "exports": {
+    "./base": "./base.json",
+    "./astro": "./astro.json",
+    "./sanity": "./sanity.json"
+  }
+}
+

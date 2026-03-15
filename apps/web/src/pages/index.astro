@@ -1,6 +1,7 @@
 ---
 import "@lawyers4visa/theme/index.css";
 import { siteMetadata } from "@lawyers4visa/content";
+import InteractiveGlobe from "../components/InteractiveGlobe.astro";
 
 import heroImage from "../../../../design/png/assets/Modern_uk_law_2k_202602091734 2.png?url";
 import londonImage from "../../../../design/png/assets/vertical-view-victoria-tower-located-palace-westminster-london-downtown-united-kingdom-blue-sky-with-flying-plane-background 1.png?url";
@@ -10,17 +11,16 @@ import legalCloseupImage from "../../../../design/png/assets/Closeup_of_legal_2k
 import ukDeskImage from "../../../../design/png/assets/Image_fx (37) 1.png?url";
 import boardroomImage from "../../../../design/png/assets/Professional_corporate_boardroom_2k_202602101 1.png?url";
 import visaImage from "../../../../design/png/assets/visa-application-composition-with-australian-flag 1.png?url";
-import globeImage from "../../../../design/png/assets/home-globe-crop.png?url";
 
 const desktopLinks = [
-  { label: "About us", href: "#about" },
+  { label: "About us", href: "about-us/" },
   { label: "Immigration insights", href: "#faq" },
   { label: "How we work", href: "#uk-advice" },
   { label: "Service", href: "#services" }
 ];
 
 const mobileLinks = [
-  { label: "About us", href: "#about" },
+  { label: "About us", href: "about-us/" },
   { label: "Immigration insights", href: "#faq" },
   { label: "How we work", href: "#uk-advice" },
   { label: "Service", href: "#services" },
@@ -250,7 +250,7 @@ const iconSprites = {
               has previously represented the Secretary of State in immigration cases, providing the firm
               with unparalleled credibility and depth of knowledge in this field.
             </p>
-            <a class="lv-button lv-button--solid lv-button--small" href="#uk-advice">Read More</a>
+            <a class="lv-button lv-button--solid lv-button--small" href="about-us/#firm-overview">Read More</a>
           </div>
         </div>
       </section>
@@ -277,7 +277,7 @@ const iconSprites = {
           </div>
 
           <div class="lv-stats__globe">
-            <img src={globeImage} alt="Illustrated globe highlighting the United Kingdom" loading="lazy" />
+            <InteractiveGlobe />
           </div>
         </div>
       </section>

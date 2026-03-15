@@ -1,0 +1,1232 @@
+<div class="lv-stats__globe-stage" data-lv-globe aria-hidden="true">
+  <canvas class="lv-stats__globe-canvas"></canvas>
+  <div class="lv-stats__globe-sheen"></div>
+</div>
+
+<script is:inline>
+  (() => {
+    const DEG = Math.PI / 180;
+    const TAU = Math.PI * 2;
+    const clamp = (value, min, max) => Math.min(max, Math.max(min, value));
+
+    const latLonToVector = (lat, lon, radius = 1) => {
+      const latRad = lat * DEG;
+      const lonRad = lon * DEG;
+
+      return {
+        x: radius * Math.cos(latRad) * Math.sin(lonRad),
+        y: radius * Math.sin(latRad),
+        z: radius * Math.cos(latRad) * Math.cos(lonRad)
+      };
+    };
+
+    const normalize = (vector) => {
+      const length = Math.hypot(vector.x, vector.y, vector.z) || 1;
+
+      return {
+        x: vector.x / length,
+        y: vector.y / length,
+        z: vector.z / length
+      };
+    };
+
+    const dot = (a, b) => a.x * b.x + a.y * b.y + a.z * b.z;
+    const worldPolygons = [
+      [
+        [72, -168],
+        [71, -160],
+        [69, -153],
+        [67, -148],
+        [64, -145],
+        [61, -141],
+        [59, -137],
+        [57, -133],
+        [55, -130],
+        [53, -128],
+        [52, -124],
+        [50, -123],
+        [49, -126],
+        [47, -124],
+        [45, -124],
+        [43, -124],
+        [40, -123],
+        [38, -122],
+        [36, -120],
+        [34, -118],
+        [32, -116],
+        [31, -113],
+        [29, -111],
+        [28, -108],
+        [27, -105],
+        [25, -102],
+        [24, -98],
+        [24, -95],
+        [26, -91],
+        [28, -88],
+        [29, -85],
+        [28, -82],
+        [26, -80],
+        [23, -80],
+        [21, -82],
+        [19, -86],
+        [18, -90],
+        [18, -94],
+        [20, -98],
+        [24, -102],
+        [28, -106],
+        [31, -111],
+        [34, -115],
+        [38, -119],
+        [42, -123],
+        [47, -127],
+        [52, -130],
+        [56, -135],
+        [60, -141],
+        [63, -148],
+        [66, -155],
+        [69, -161]
+      ],
+      [
+        [24, -97],
+        [22, -92],
+        [20, -89],
+        [18, -87],
+        [15, -85],
+        [13, -86],
+        [10, -84],
+        [9, -81],
+        [10, -78],
+        [14, -78],
+        [18, -79],
+        [21, -83],
+        [23, -89]
+      ],
+      [
+        [23, -85],
+        [23, -80],
+        [22, -76],
+        [20, -75],
+        [19, -78],
+        [20, -82]
+      ],
+      [
+        [83, -74],
+        [82, -60],
+        [80, -45],
+        [77, -32],
+        [73, -20],
+        [69, -20],
+        [61, -36],
+        [60, -50],
+        [63, -60],
+        [69, -68],
+        [76, -72]
+      ],
+      [
+        [66, -25],
+        [65, -18],
+        [63, -14],
+        [64, -20]
+      ],
+      [
+        [12, -81],
+        [10, -78],
+        [7, -76],
+        [4, -73],
+        [1, -69],
+        [-3, -66],
+        [-8, -65],
+        [-13, -67],
+        [-18, -71],
+        [-23, -73],
+        [-28, -72],
+        [-33, -71],
+        [-39, -68],
+        [-46, -64],
+        [-53, -61],
+        [-55, -54],
+        [-54, -46],
+        [-50, -40],
+        [-44, -37],
+        [-37, -35],
+        [-29, -34],
+        [-22, -39],
+        [-16, -42],
+        [-9, -47],
+        [-3, -52],
+        [2, -56],
+        [6, -60],
+        [8, -64],
+        [10, -69]
+      ],
+      [
+        [71, -11],
+        [70, -4],
+        [69, 3],
+        [67, 10],
+        [64, 16],
+        [60, 20],
+        [58, 24],
+        [60, 29],
+        [64, 33],
+        [68, 31],
+        [70, 24],
+        [71, 16],
+        [71, 8],
+        [71, 0]
+      ],
+      [
+        [58, -10],
+        [56, -8],
+        [54, -5],
+        [52, -4],
+        [51, -1],
+        [50, 1],
+        [50, 4],
+        [51, 7],
+        [52, 10],
+        [53, 13],
+        [52, 17],
+        [50, 20],
+        [48, 22],
+        [46, 19],
+        [44, 15],
+        [43, 10],
+        [42, 6],
+        [43, 1],
+        [45, -2],
+        [47, -5],
+        [50, -7],
+        [54, -9]
+      ],
+      [
+        [38, -10],
+        [40, -5],
+        [43, -1],
+        [44, 5],
+        [45, 10],
+        [44, 14],
+        [42, 18],
+        [41, 23],
+        [39, 28],
+        [37, 30],
+        [36, 24],
+        [36, 18],
+        [37, 10],
+        [37, 2],
+        [36, -4]
+      ],
+      [
+        [43, -9],
+        [42, -5],
+        [41, -1],
+        [40, 1],
+        [39, 4],
+        [38, 2],
+        [37, -2],
+        [38, -6]
+      ],
+      [
+        [36, -18],
+        [35, -10],
+        [35, -2],
+        [36, 8],
+        [34, 17],
+        [32, 24],
+        [31, 31],
+        [28, 34],
+        [24, 37],
+        [20, 42],
+        [16, 46],
+        [12, 50],
+        [7, 51],
+        [2, 49],
+        [-3, 44],
+        [-8, 40],
+        [-12, 37],
+        [-16, 35],
+        [-20, 33],
+        [-24, 31],
+        [-28, 27],
+        [-31, 22],
+        [-33, 16],
+        [-34, 10],
+        [-34, 4],
+        [-31, -1],
+        [-28, -7],
+        [-23, -11],
+        [-18, -14],
+        [-12, -16],
+        [-5, -18],
+        [4, -17],
+        [12, -16],
+        [20, -15],
+        [27, -13],
+        [32, -10]
+      ],
+      [
+        [-12, 43],
+        [-14, 46],
+        [-16, 49],
+        [-19, 50],
+        [-23, 48],
+        [-25, 45],
+        [-24, 43],
+        [-21, 44],
+        [-17, 44]
+      ],
+      [
+        [33, 35],
+        [31, 40],
+        [29, 45],
+        [26, 49],
+        [23, 53],
+        [19, 56],
+        [16, 54],
+        [14, 50],
+        [14, 45],
+        [16, 41],
+        [19, 39],
+        [23, 37],
+        [28, 35]
+      ],
+      [
+        [76, 42],
+        [75, 50],
+        [74, 58],
+        [73, 66],
+        [72, 74],
+        [72, 82],
+        [72, 90],
+        [71, 100],
+        [70, 110],
+        [68, 120],
+        [66, 130],
+        [63, 140],
+        [60, 150],
+        [57, 160],
+        [53, 165],
+        [49, 161],
+        [45, 154],
+        [41, 146],
+        [38, 138],
+        [35, 130],
+        [32, 123],
+        [29, 117],
+        [26, 111],
+        [24, 105],
+        [22, 99],
+        [20, 93],
+        [19, 86],
+        [20, 79],
+        [23, 72],
+        [26, 66],
+        [30, 60],
+        [34, 53],
+        [38, 47],
+        [43, 44],
+        [49, 46],
+        [55, 52],
+        [61, 58],
+        [67, 63],
+        [72, 59]
+      ],
+      [
+        [24, 68],
+        [27, 71],
+        [30, 75],
+        [31, 79],
+        [30, 83],
+        [27, 86],
+        [24, 88],
+        [21, 90],
+        [18, 88],
+        [16, 84],
+        [14, 80],
+        [11, 76],
+        [8, 73],
+        [7, 70],
+        [10, 69],
+        [14, 70],
+        [18, 71],
+        [21, 70]
+      ],
+      [
+        [21, 97],
+        [23, 102],
+        [22, 107],
+        [19, 110],
+        [16, 108],
+        [13, 107],
+        [10, 106],
+        [7, 103],
+        [5, 100],
+        [2, 99],
+        [0, 101],
+        [-2, 104],
+        [-4, 107],
+        [-6, 105],
+        [-6, 100],
+        [-4, 97],
+        [0, 97],
+        [5, 98],
+        [10, 99],
+        [15, 100],
+        [19, 100]
+      ],
+      [
+        [18, 121],
+        [17, 123],
+        [15, 125],
+        [12, 124],
+        [9, 123],
+        [7, 121],
+        [8, 118],
+        [11, 118],
+        [14, 119]
+      ],
+      [
+        [46, 141],
+        [44, 144],
+        [41, 145],
+        [38, 144],
+        [35, 141],
+        [33, 138],
+        [34, 135],
+        [37, 136],
+        [40, 138],
+        [43, 140]
+      ],
+      [
+        [6, 95],
+        [5, 100],
+        [3, 106],
+        [1, 112],
+        [-3, 118],
+        [-5, 123],
+        [-7, 129],
+        [-8, 136],
+        [-7, 143],
+        [-9, 146],
+        [-11, 141],
+        [-10, 133],
+        [-8, 125],
+        [-8, 117],
+        [-9, 110],
+        [-8, 103],
+        [-7, 97]
+      ],
+      [
+        [-10, 113],
+        [-12, 119],
+        [-14, 126],
+        [-16, 133],
+        [-18, 139],
+        [-21, 145],
+        [-24, 149],
+        [-28, 152],
+        [-33, 153],
+        [-37, 150],
+        [-41, 145],
+        [-43, 139],
+        [-42, 132],
+        [-39, 126],
+        [-35, 120],
+        [-30, 116],
+        [-24, 114],
+        [-18, 113]
+      ],
+      [
+        [-34, 172],
+        [-36, 176],
+        [-40, 176],
+        [-42, 172],
+        [-39, 170]
+      ],
+      [
+        [-42, 166],
+        [-44, 170],
+        [-46, 173],
+        [-47, 170],
+        [-46, 166]
+      ],
+      [
+        [-63, -180],
+        [-65, -150],
+        [-68, -120],
+        [-70, -80],
+        [-71, -20],
+        [-69, 40],
+        [-71, 110],
+        [-68, 160],
+        [-64, 180]
+      ]
+    ];
+
+    const pointInPolygon = (latitude, longitude, polygon) => {
+      let isInside = false;
+
+      for (let index = 0, previous = polygon.length - 1; index < polygon.length; previous = index++) {
+        const [currentLat, currentLon] = polygon[index];
+        const [previousLat, previousLon] = polygon[previous];
+        const intersects = ((currentLat > latitude) !== (previousLat > latitude))
+          && (
+            longitude
+              < ((previousLon - currentLon) * (latitude - currentLat)) / ((previousLat - currentLat) || 0.00001)
+                + currentLon
+          );
+
+        if (intersects) {
+          isInside = !isInside;
+        }
+      }
+
+      return isInside;
+    };
+
+    const densifyPolygon = (polygon, step = 2) => {
+      const points = [];
+
+      for (let index = 0; index < polygon.length; index += 1) {
+        const current = polygon[index];
+        const next = polygon[(index + 1) % polygon.length];
+        const deltaLat = next[0] - current[0];
+        const deltaLon = next[1] - current[1];
+        const totalSteps = Math.max(2, Math.ceil(Math.max(Math.abs(deltaLat), Math.abs(deltaLon)) / step));
+
+        for (let pointIndex = 0; pointIndex < totalSteps; pointIndex += 1) {
+          const progress = pointIndex / totalSteps;
+
+          points.push([
+            current[0] + deltaLat * progress,
+            current[1] + deltaLon * progress
+          ]);
+        }
+      }
+
+      return points;
+    };
+
+    const rotatePoint = (point, rotationY, rotationX) => {
+      const cosY = Math.cos(rotationY);
+      const sinY = Math.sin(rotationY);
+      const cosX = Math.cos(rotationX);
+      const sinX = Math.sin(rotationX);
+
+      const rotatedY = {
+        x: point.x * cosY - point.z * sinY,
+        y: point.y,
+        z: point.x * sinY + point.z * cosY
+      };
+
+      return {
+        x: rotatedY.x,
+        y: rotatedY.y * cosX - rotatedY.z * sinX,
+        z: rotatedY.y * sinX + rotatedY.z * cosX
+      };
+    };
+
+    const projectPoint = (point, radiusPx, centerX, centerY) => {
+      const cameraDistance = 3.4;
+      const perspective = cameraDistance / (cameraDistance - point.z);
+
+      return {
+        x: centerX + point.x * radiusPx * perspective,
+        y: centerY + point.y * radiusPx * perspective,
+        z: point.z,
+        scale: perspective
+      };
+    };
+
+    const buildGridSegments = ({
+      longitudeStep = 20,
+      latitudeStep = 6,
+      ringLatitudeStep = 20,
+      ringLongitudeStep = 6
+    } = {}) => {
+      const segments = [];
+
+      for (let longitude = -180; longitude < 180; longitude += longitudeStep) {
+        for (let latitude = -80; latitude < 80; latitude += latitudeStep) {
+          segments.push([
+            latLonToVector(latitude, longitude),
+            latLonToVector(latitude + latitudeStep, longitude)
+          ]);
+        }
+      }
+
+      for (let latitude = -60; latitude <= 60; latitude += ringLatitudeStep) {
+        for (let longitude = -180; longitude < 180; longitude += ringLongitudeStep) {
+          segments.push([
+            latLonToVector(latitude, longitude),
+            latLonToVector(latitude, longitude + ringLongitudeStep)
+          ]);
+        }
+      }
+
+      return segments;
+    };
+
+    const isLandCoordinate = (latitude, longitude) =>
+      worldPolygons.some((polygon) => pointInPolygon(latitude, longitude, polygon));
+
+    const buildLandDots = ({
+      dotStep = 2.4,
+      reliefModulo = 21,
+      reliefThreshold = 6,
+      reliefOffset = 0.3
+    } = {}) => {
+      const landDots = [];
+      const reliefDots = [];
+
+      for (let latitude = -72; latitude <= 84; latitude += dotStep) {
+        for (let longitude = -180; longitude <= 180; longitude += dotStep) {
+          if (!isLandCoordinate(latitude, longitude)) {
+            continue;
+          }
+
+          landDots.push(latLonToVector(latitude, longitude));
+
+          const reliefSeed = Math.abs(
+            ((latitude + 90) * 31 + (longitude + 180) * 17 + Math.round(latitude * longitude))
+              % reliefModulo
+          );
+
+          if (reliefSeed < reliefThreshold) {
+            reliefDots.push(
+              latLonToVector(
+                latitude + Math.sin((longitude + latitude) * DEG) * reliefOffset,
+                longitude + Math.cos((longitude - latitude) * DEG) * reliefOffset
+              )
+            );
+          }
+        }
+      }
+
+      return { landDots, reliefDots };
+    };
+
+    const buildCoastSegments = ({ densifyStep = 2.8 } = {}) => {
+      const segments = [];
+
+      worldPolygons.forEach((polygon) => {
+        const points = densifyPolygon(polygon, densifyStep);
+
+        for (let index = 0; index < points.length; index += 1) {
+          const current = points[index];
+          const next = points[(index + 1) % points.length];
+
+          segments.push([
+            latLonToVector(current[0], current[1]),
+            latLonToVector(next[0], next[1])
+          ]);
+        }
+      });
+
+      return segments;
+    };
+
+    const slerp = (from, to, amount) => {
+      const start = normalize(from);
+      const end = normalize(to);
+      const angle = Math.acos(clamp(dot(start, end), -1, 1));
+
+      if (angle < 0.001) {
+        return start;
+      }
+
+      const sinAngle = Math.sin(angle);
+      const startWeight = Math.sin((1 - amount) * angle) / sinAngle;
+      const endWeight = Math.sin(amount * angle) / sinAngle;
+
+      return normalize({
+        x: start.x * startWeight + end.x * endWeight,
+        y: start.y * startWeight + end.y * endWeight,
+        z: start.z * startWeight + end.z * endWeight
+      });
+    };
+
+    const buildArc = (fromLat, fromLon, toLat, toLon, steps = 32) => {
+      const origin = latLonToVector(fromLat, fromLon);
+      const target = latLonToVector(toLat, toLon);
+      const points = [];
+
+      for (let step = 0; step <= steps; step += 1) {
+        const progress = step / steps;
+        const point = slerp(origin, target, progress);
+        const lift = 1 + 0.18 * Math.sin(progress * Math.PI);
+
+        points.push({
+          x: point.x * lift,
+          y: point.y * lift,
+          z: point.z * lift
+        });
+      }
+
+      return points;
+    };
+
+    document.querySelectorAll("[data-lv-globe]").forEach((stage) => {
+      if (stage.dataset.ready === "true") {
+        return;
+      }
+
+      stage.dataset.ready = "true";
+
+      const canvas = stage.querySelector("canvas");
+      const context = canvas?.getContext("2d");
+
+      if (!canvas || !context) {
+        return;
+      }
+
+      const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      const coarsePointer = window.matchMedia("(pointer: coarse)").matches;
+      const lowPowerDevice = coarsePointer
+        || (navigator.hardwareConcurrency || 8) <= 4
+        || ((navigator.deviceMemory || 8) <= 4);
+      let width = 0;
+      let height = 0;
+      let rotationY = -0.48;
+      let rotationX = -0.18;
+      let velocityY = 0;
+      let velocityX = 0;
+      let dragging = false;
+      let pointerX = 0;
+      let pointerY = 0;
+      let frameId = 0;
+      let lastFrameTime = 0;
+      let isStageVisible = true;
+      let isPageVisible = document.visibilityState !== "hidden";
+      let detailKey = "";
+      let gridSegments = [];
+      let landDots = [];
+      let reliefDots = [];
+      let coastSegments = [];
+      let routeArcs = [];
+      const ukMarker = latLonToVector(54.5, -2.5);
+
+      const getDetailProfile = (currentWidth) => {
+        if (reducedMotion || lowPowerDevice || currentWidth < 360) {
+          return {
+            key: "low",
+            maxDpr: 1,
+            idleFps: 20,
+            grid: { longitudeStep: 30, latitudeStep: 10, ringLatitudeStep: 30, ringLongitudeStep: 10 },
+            land: { dotStep: 4.2, reliefModulo: 25, reliefThreshold: 3, reliefOffset: 0.24 },
+            coast: { densifyStep: 4.8 },
+            arcSteps: 20
+          };
+        }
+
+        if (coarsePointer || currentWidth < 560) {
+          return {
+            key: "medium",
+            maxDpr: 1.2,
+            idleFps: 24,
+            grid: { longitudeStep: 24, latitudeStep: 8, ringLatitudeStep: 24, ringLongitudeStep: 8 },
+            land: { dotStep: 3.2, reliefModulo: 23, reliefThreshold: 4, reliefOffset: 0.28 },
+            coast: { densifyStep: 3.6 },
+            arcSteps: 24
+          };
+        }
+
+        return {
+          key: "high",
+          maxDpr: 1.35,
+          idleFps: 28,
+          grid: { longitudeStep: 20, latitudeStep: 7, ringLatitudeStep: 20, ringLongitudeStep: 7 },
+          land: { dotStep: 2.8, reliefModulo: 21, reliefThreshold: 5, reliefOffset: 0.3 },
+          coast: { densifyStep: 3 },
+          arcSteps: 28
+        };
+      };
+
+      const rebuildGeometry = (profile) => {
+        gridSegments = buildGridSegments(profile.grid);
+        ({ landDots, reliefDots } = buildLandDots(profile.land));
+        coastSegments = buildCoastSegments(profile.coast);
+        routeArcs = [
+          buildArc(6.5244, 3.3792, 54.5, -2.5, profile.arcSteps),
+          buildArc(28.6139, 77.209, 54.5, -2.5, profile.arcSteps),
+          buildArc(40.7128, -74.006, 54.5, -2.5, profile.arcSteps)
+        ];
+      };
+
+      const renderFrame = () => {
+        if (!width || !height) {
+          return;
+        }
+
+        context.clearRect(0, 0, width, height);
+
+        const centerX = width / 2;
+        const centerY = height / 2;
+        const radius = Math.min(width, height) * 0.36;
+
+        if (!dragging) {
+          rotationY += velocityY;
+          rotationX = clamp(rotationX + velocityX, -0.7, 0.55);
+
+          if (!reducedMotion) {
+            rotationY += 0.0022;
+          }
+
+          velocityY *= 0.92;
+          velocityX *= 0.84;
+        }
+
+        drawOrbit(centerX, centerY, radius);
+        drawSphere(centerX, centerY, radius);
+        drawGrid(centerX, centerY, radius);
+        drawArcs(centerX, centerY, radius);
+        drawMarker(centerX, centerY, radius);
+      };
+
+      const shouldAnimate = () => (
+        isStageVisible
+        && isPageVisible
+        && (!reducedMotion || dragging || Math.abs(velocityY) > 0.00005 || Math.abs(velocityX) > 0.00005)
+      );
+
+      const stopLoop = () => {
+        if (frameId) {
+          window.cancelAnimationFrame(frameId);
+          frameId = 0;
+        }
+      };
+
+      const tick = (timestamp = 0) => {
+        frameId = 0;
+
+        if (!shouldAnimate()) {
+          renderFrame();
+          return;
+        }
+
+        const profile = getDetailProfile(width);
+        const frameInterval = dragging ? 1000 / 60 : 1000 / profile.idleFps;
+
+        if (timestamp - lastFrameTime >= frameInterval - 2) {
+          lastFrameTime = timestamp;
+          renderFrame();
+        }
+
+        if (shouldAnimate()) {
+          frameId = window.requestAnimationFrame(tick);
+        }
+      };
+
+      const startLoop = () => {
+        if (!frameId && shouldAnimate()) {
+          frameId = window.requestAnimationFrame(tick);
+        }
+      };
+
+      const resize = () => {
+        const bounds = stage.getBoundingClientRect();
+        const profile = getDetailProfile(bounds.width);
+        const ratio = Math.min(window.devicePixelRatio || 1, profile.maxDpr);
+
+        width = bounds.width;
+        height = bounds.height;
+        canvas.width = Math.max(1, Math.round(bounds.width * ratio));
+        canvas.height = Math.max(1, Math.round(bounds.height * ratio));
+        context.setTransform(ratio, 0, 0, ratio, 0, 0);
+
+        if (detailKey !== profile.key) {
+          detailKey = profile.key;
+          rebuildGeometry(profile);
+        }
+
+        renderFrame();
+        startLoop();
+      };
+
+      const drawSphere = (centerX, centerY, radius) => {
+        const fill = context.createRadialGradient(
+          centerX - radius * 0.35,
+          centerY - radius * 0.42,
+          radius * 0.12,
+          centerX,
+          centerY,
+          radius * 1.08
+        );
+
+        fill.addColorStop(0, "rgba(255, 248, 241, 0.98)");
+        fill.addColorStop(0.28, "rgba(210, 164, 126, 0.96)");
+        fill.addColorStop(0.58, "rgba(127, 77, 38, 0.98)");
+        fill.addColorStop(1, "rgba(57, 25, 0, 1)");
+
+        context.beginPath();
+        context.arc(centerX, centerY, radius, 0, TAU);
+        context.fillStyle = fill;
+        context.fill();
+
+        const rim = context.createLinearGradient(
+          centerX - radius,
+          centerY - radius,
+          centerX + radius,
+          centerY + radius
+        );
+
+        rim.addColorStop(0, "rgba(255, 241, 230, 0.45)");
+        rim.addColorStop(1, "rgba(95, 41, 0, 0.18)");
+
+        context.beginPath();
+        context.arc(centerX, centerY, radius, 0, TAU);
+        context.lineWidth = Math.max(1, radius * 0.012);
+        context.strokeStyle = rim;
+        context.stroke();
+      };
+
+      const drawGrid = (centerX, centerY, radius) => {
+        context.save();
+        context.beginPath();
+        context.arc(centerX, centerY, radius, 0, TAU);
+        context.clip();
+
+        gridSegments.forEach(([start, end]) => {
+          const projectedStart = projectPoint(
+            rotatePoint(start, rotationY, rotationX),
+            radius,
+            centerX,
+            centerY
+          );
+          const projectedEnd = projectPoint(
+            rotatePoint(end, rotationY, rotationX),
+            radius,
+            centerX,
+            centerY
+          );
+
+          const averageDepth = (projectedStart.z + projectedEnd.z) / 2;
+          const alpha = averageDepth > 0
+            ? 0.16 + averageDepth * 0.18
+            : 0.03 + (averageDepth + 1) * 0.04;
+
+          context.beginPath();
+          context.moveTo(projectedStart.x, projectedStart.y);
+          context.lineTo(projectedEnd.x, projectedEnd.y);
+          context.lineWidth = averageDepth > 0 ? 1.05 : 0.7;
+          context.strokeStyle = averageDepth > 0
+            ? `rgba(255, 235, 216, ${alpha})`
+            : `rgba(120, 73, 42, ${alpha})`;
+          context.stroke();
+        });
+
+        landDots.forEach((dotPoint) => {
+          const projectedPoint = projectPoint(
+            rotatePoint(dotPoint, rotationY, rotationX),
+            radius,
+            centerX,
+            centerY
+          );
+
+          const alpha = projectedPoint.z > 0
+            ? 0.22 + projectedPoint.z * 0.26
+            : 0.04 + (projectedPoint.z + 1) * 0.03;
+
+          context.beginPath();
+          context.arc(
+            projectedPoint.x,
+            projectedPoint.y,
+            Math.max(0.85, projectedPoint.scale * 1.15),
+            0,
+            TAU
+          );
+          context.fillStyle = projectedPoint.z > 0
+            ? `rgba(255, 226, 198, ${alpha})`
+            : `rgba(171, 112, 66, ${alpha})`;
+          context.fill();
+        });
+
+        reliefDots.forEach((dotPoint) => {
+          const projectedPoint = projectPoint(
+            rotatePoint(dotPoint, rotationY, rotationX),
+            radius,
+            centerX,
+            centerY
+          );
+
+          if (projectedPoint.z < -0.18) {
+            return;
+          }
+
+          const alpha = projectedPoint.z > 0
+            ? 0.08 + projectedPoint.z * 0.16
+            : 0.03 + (projectedPoint.z + 1) * 0.03;
+
+          context.beginPath();
+          context.arc(
+            projectedPoint.x,
+            projectedPoint.y,
+            Math.max(0.4, projectedPoint.scale * 0.65),
+            0,
+            TAU
+          );
+          context.fillStyle = projectedPoint.z > 0
+            ? `rgba(88, 45, 17, ${alpha})`
+            : `rgba(120, 69, 34, ${alpha})`;
+          context.fill();
+        });
+
+        coastSegments.forEach(([start, end]) => {
+          const projectedStart = projectPoint(
+            rotatePoint(start, rotationY, rotationX),
+            radius,
+            centerX,
+            centerY
+          );
+          const projectedEnd = projectPoint(
+            rotatePoint(end, rotationY, rotationX),
+            radius,
+            centerX,
+            centerY
+          );
+
+          const averageDepth = (projectedStart.z + projectedEnd.z) / 2;
+
+          if (averageDepth < -0.12) {
+            return;
+          }
+
+          context.beginPath();
+          context.moveTo(projectedStart.x, projectedStart.y);
+          context.lineTo(projectedEnd.x, projectedEnd.y);
+          context.lineWidth = averageDepth > 0 ? 1.2 : 0.8;
+          context.strokeStyle = averageDepth > 0
+            ? `rgba(255, 241, 229, ${0.24 + averageDepth * 0.22})`
+            : `rgba(156, 97, 54, ${0.08 + (averageDepth + 1) * 0.05})`;
+          context.stroke();
+        });
+
+        context.restore();
+      };
+
+      const drawArcs = (centerX, centerY, radius) => {
+        routeArcs.forEach((arcPoints, index) => {
+          context.beginPath();
+
+          arcPoints.forEach((point, pointIndex) => {
+            const projectedPoint = projectPoint(
+              rotatePoint(point, rotationY, rotationX),
+              radius,
+              centerX,
+              centerY
+            );
+
+            if (pointIndex === 0) {
+              context.moveTo(projectedPoint.x, projectedPoint.y);
+              return;
+            }
+
+            context.lineTo(projectedPoint.x, projectedPoint.y);
+          });
+
+          const opacity = 0.22 + index * 0.08;
+          context.lineWidth = 1.25;
+          context.strokeStyle = `rgba(255, 182, 111, ${opacity})`;
+          context.shadowColor = "rgba(255, 183, 104, 0.18)";
+          context.shadowBlur = 12;
+          context.stroke();
+          context.shadowBlur = 0;
+        });
+      };
+
+      const drawMarker = (centerX, centerY, radius) => {
+        const projectedMarker = projectPoint(
+          rotatePoint(ukMarker, rotationY, rotationX),
+          radius,
+          centerX,
+          centerY
+        );
+
+        if (projectedMarker.z < -0.05) {
+          return;
+        }
+
+        context.beginPath();
+        context.arc(projectedMarker.x, projectedMarker.y, 5.5, 0, TAU);
+        context.fillStyle = "rgba(255, 239, 225, 0.98)";
+        context.shadowColor = "rgba(255, 190, 122, 0.55)";
+        context.shadowBlur = 18;
+        context.fill();
+        context.shadowBlur = 0;
+
+        context.beginPath();
+        context.arc(projectedMarker.x, projectedMarker.y, 11, 0, TAU);
+        context.strokeStyle = "rgba(255, 205, 150, 0.4)";
+        context.lineWidth = 1.2;
+        context.stroke();
+      };
+
+      const drawOrbit = (centerX, centerY, radius) => {
+        context.beginPath();
+        context.ellipse(
+          centerX,
+          centerY + radius * 0.1,
+          radius * 1.12,
+          radius * 0.42,
+          -0.22,
+          0,
+          TAU
+        );
+        context.strokeStyle = "rgba(181, 117, 63, 0.18)";
+        context.lineWidth = 1.2;
+        context.stroke();
+      };
+
+      const onPointerDown = (event) => {
+        dragging = true;
+        pointerX = event.clientX;
+        pointerY = event.clientY;
+        velocityY = 0;
+        velocityX = 0;
+        stage.classList.add("is-dragging");
+        stage.setPointerCapture?.(event.pointerId);
+        startLoop();
+      };
+
+      const onPointerMove = (event) => {
+        if (!dragging) {
+          return;
+        }
+
+        const deltaX = event.clientX - pointerX;
+        const deltaY = event.clientY - pointerY;
+
+        pointerX = event.clientX;
+        pointerY = event.clientY;
+        rotationY += deltaX * 0.005;
+        rotationX = clamp(rotationX + deltaY * 0.004, -0.7, 0.55);
+        velocityY = deltaX * 0.00055;
+        velocityX = deltaY * 0.0004;
+        renderFrame();
+        startLoop();
+      };
+
+      const releasePointer = (event) => {
+        if (!dragging) {
+          return;
+        }
+
+        dragging = false;
+        stage.classList.remove("is-dragging");
+
+        try {
+          stage.releasePointerCapture?.(event.pointerId);
+        } catch {}
+
+        startLoop();
+      };
+
+      resize();
+
+      const resizeObserver = new ResizeObserver(resize);
+      resizeObserver.observe(stage);
+      const visibilityObserver = new IntersectionObserver(
+        ([entry]) => {
+          isStageVisible = Boolean(entry?.isIntersecting);
+
+          if (isStageVisible) {
+            renderFrame();
+            startLoop();
+            return;
+          }
+
+          stopLoop();
+        },
+        {
+          threshold: 0.12
+        }
+      );
+      visibilityObserver.observe(stage);
+
+      const onVisibilityChange = () => {
+        isPageVisible = document.visibilityState !== "hidden";
+
+        if (isPageVisible) {
+          renderFrame();
+          startLoop();
+          return;
+        }
+
+        stopLoop();
+      };
+
+      stage.addEventListener("pointerdown", onPointerDown);
+      stage.addEventListener("pointermove", onPointerMove);
+      stage.addEventListener("pointerup", releasePointer);
+      stage.addEventListener("pointerleave", releasePointer);
+      stage.addEventListener("pointercancel", releasePointer);
+      document.addEventListener("visibilitychange", onVisibilityChange);
+
+      window.addEventListener(
+        "pagehide",
+        () => {
+          stopLoop();
+          resizeObserver.disconnect();
+          visibilityObserver.disconnect();
+          document.removeEventListener("visibilitychange", onVisibilityChange);
+        },
+        { once: true }
+      );
+    });
+  })();
+</script>
+
+<style>
+  .lv-stats__globe-stage {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    isolation: isolate;
+  }
+
+  .lv-stats__globe-stage::before {
+    content: "";
+    position: absolute;
+    inset: 14% 18%;
+    background: radial-gradient(circle, rgba(255, 229, 203, 0.32) 0%, rgba(196, 129, 72, 0.18) 42%, rgba(57, 25, 0, 0) 72%);
+    filter: blur(34px);
+    z-index: 0;
+  }
+
+  .lv-stats__globe-stage::after {
+    content: "";
+    position: absolute;
+    inset: 4%;
+    border: 1px solid rgba(148, 88, 45, 0.12);
+    border-radius: 50%;
+    z-index: 0;
+  }
+
+  .lv-stats__globe-canvas {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    display: block;
+    cursor: grab;
+    touch-action: none;
+    filter: drop-shadow(0 36px 48px rgba(57, 25, 0, 0.16));
+  }
+
+  .lv-stats__globe-stage.is-dragging .lv-stats__globe-canvas {
+    cursor: grabbing;
+  }
+
+  .lv-stats__globe-sheen {
+    position: absolute;
+    inset: 11% 18% 28% 20%;
+    z-index: 2;
+    border-radius: 50%;
+    background:
+      radial-gradient(circle at 28% 24%, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0) 36%),
+      radial-gradient(circle at 70% 78%, rgba(255, 199, 147, 0.12), rgba(255, 199, 147, 0) 42%);
+    pointer-events: none;
+    mix-blend-mode: screen;
+  }
+</style>

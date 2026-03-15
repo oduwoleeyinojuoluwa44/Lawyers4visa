@@ -1,0 +1,241 @@
+---
+import "@lawyers4visa/theme/index.css";
+import { siteMetadata } from "@lawyers4visa/content";
+
+import aboutHeroImage from "../../../../design/png/assets/about-hero.jpg?url";
+import aboutValuesTopImage from "../../../../design/png/assets/about-values-top.jpg?url";
+import aboutValuesBottomImage from "../../../../design/png/assets/hr-manager-applicant-meeting-job-interview 1.png?url";
+import aboutExperienceImage from "../../../../design/png/assets/about-experience-b.jpg?url";
+import aboutScopeImage from "../../../../design/png/assets/about-scope.jpg?url";
+
+const desktopLinks = [
+  { label: "About us", href: "/about-us/", current: true },
+  { label: "Immigration insights", href: "/#faq" },
+  { label: "How we work", href: "/#uk-advice" },
+  { label: "Service", href: "/#services" }
+];
+
+const mobileLinks = [
+  { label: "About us", href: "/about-us/", current: true },
+  { label: "Immigration insights", href: "/#faq" },
+  { label: "How we work", href: "/#uk-advice" },
+  { label: "Service", href: "/#services" },
+  { label: "Legal and compliance", href: "/#consultations" }
+];
+
+const overviewParagraphs = [
+  "Yemi Oguntolu and Co is an established UK-based specialist immigration law firm with extensive expertise in UK immigration law and practice.",
+  "The Principal Partner has appeared in all tiers of the Immigration and Asylum Chamber and has previously represented the Secretary of State in immigration cases, providing the firm with unparalleled credibility and depth of knowledge in this field."
+];
+
+const professionalValues = [
+  "Excellence in legal analysis and representation",
+  "Integrity in client relationships",
+  "Structured and methodical case preparation",
+  "Confidentiality and discretion",
+  "Commitment to current UK immigration practice"
+];
+
+const experienceParagraphs = [
+  "The Principal Partner has appeared in all tiers of the Immigration and Asylum Chamber and has previously represented the Secretary of State in immigration cases.",
+  "This experience provides the firm with practical insight into Home Office decision-making processes and tribunal procedures, enabling structured and credible representation."
+];
+
+const scopeParagraphs = [
+  "The Principal Partner has appeared in all tiers of the Immigration and Asylum Chamber and has previously represented the Secretary of State in immigration cases.",
+  "This experience provides the firm with practical insight into Home Office decision-making processes and tribunal procedures, enabling structured and credible representation."
+];
+
+const socialLinks = [
+  {
+    label: "X",
+    href: "#",
+    icon: `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 5.5 18 18.5M18 5.5 6 18.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>`
+  },
+  {
+    label: "Instagram",
+    href: "#",
+    icon: `<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5.25" y="5.25" width="13.5" height="13.5" rx="4" fill="none" stroke="currentColor" stroke-width="1.5"/><circle cx="12" cy="12" r="3.25" fill="none" stroke="currentColor" stroke-width="1.5"/><circle cx="16.6" cy="7.4" r="0.8" fill="currentColor"/></svg>`
+  },
+  {
+    label: "Facebook",
+    href: "#",
+    icon: `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14.2 8.1h2.2V5.4h-2.2c-2.2 0-3.7 1.5-3.7 3.8v1.9H8.3v2.7h2.2v4.8h2.8v-4.8h2.5l.3-2.7h-2.8V9.5c0-.9.4-1.4 1.2-1.4Z" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></svg>`
+  },
+  {
+    label: "LinkedIn",
+    href: "#",
+    icon: `<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5.25" y="5.25" width="13.5" height="13.5" rx="3" fill="none" stroke="currentColor" stroke-width="1.4"/><path d="M9 10.3v5.2M9 8.3a.8.8 0 1 0 0 1.6.8.8 0 0 0 0-1.6Zm2.8 7.2v-3c0-1.2.7-2 1.8-2s1.6.7 1.6 2v3" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>`
+  }
+];
+
+const chevronDownIcon = `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m7 10 5 5 5-5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>About Us | {siteMetadata.title}</title>
+    <meta
+      name="description"
+      content="Learn about the firm's specialist UK immigration practice, professional values, tribunal experience, and structured approach to legal representation."
+    />
+    <meta name="theme-color" content="#ffffff" />
+  </head>
+  <body class="about-page" id="top">
+    <header class="lv-header">
+      <div class="lv-shell lv-header__shell">
+        <a class="lv-brand" href="/" aria-label="LawyerForVisa home">LawyerForVisa</a>
+
+        <nav class="lv-nav" aria-label="Primary navigation">
+          {
+            desktopLinks.map((link) => (
+              <a href={link.href} class:list={{ "is-active": link.current }}>{link.label}</a>
+            ))
+          }
+        </nav>
+
+        <a class="lv-button lv-button--header lv-button--header-cta" href="/#consultations">
+          <span>Book Consultation</span>
+          <span class="lv-button__icon" set:html={chevronDownIcon} />
+        </a>
+
+        <details class="lv-mobile-menu">
+          <summary aria-label="Open navigation menu">
+            <span></span>
+            <span></span>
+            <span></span>
+          </summary>
+
+          <nav class="lv-mobile-menu__panel" aria-label="Mobile navigation">
+            <a class="lv-mobile-menu__brand" href="/">LawyerForVisa</a>
+            {
+              mobileLinks.map((link) => (
+                <a href={link.href} class:list={{ "is-active": link.current }}>{link.label}</a>
+              ))
+            }
+          </nav>
+        </details>
+      </div>
+    </header>
+
+    <main class="lv-main lv-about-main">
+      <section class="lv-about-section lv-about-section--overview" id="firm-overview" data-node-id="270:2113">
+        <div class="lv-about-shell lv-about-shell--overview">
+          <figure class="lv-about-image-card lv-about-image-card--hero">
+            <img src={aboutHeroImage} alt="Consultation meeting inside a modern law office." loading="eager" />
+          </figure>
+
+          <div class="lv-about-copy" data-node-id="270:2121">
+            <div class="lv-about-heading-group" data-node-id="272:2231">
+              <h1 class="lv-about-title">Firm Overview</h1>
+              <p class="lv-about-subtitle">A Specialist Practice in UK Immigration Law</p>
+            </div>
+
+            <div class="lv-about-prose" data-node-id="272:2230">
+              {overviewParagraphs.map((paragraph) => <p>{paragraph}</p>)}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="lv-about-section lv-about-section--values" data-node-id="272:2145">
+        <div class="lv-about-shell lv-about-shell--values">
+          <div class="lv-about-copy lv-about-copy--values" data-node-id="272:2149">
+            <h2 class="lv-about-title">Professional Values</h2>
+            <ul class="lv-about-values-list" data-node-id="272:2151">
+              {professionalValues.map((item) => <li>{item}</li>)}
+            </ul>
+          </div>
+
+          <div class="lv-about-values-stack" data-node-id="272:2157" aria-hidden="true">
+            <figure class="lv-about-values-stack__card lv-about-values-stack__card--top">
+              <img src={aboutValuesTopImage} alt="" loading="lazy" />
+            </figure>
+            <figure class="lv-about-values-stack__card lv-about-values-stack__card--bottom">
+              <img src={aboutValuesBottomImage} alt="" loading="lazy" />
+            </figure>
+          </div>
+        </div>
+      </section>
+
+      <section class="lv-about-section lv-about-section--experience" data-node-id="270:2127">
+        <div class="lv-about-shell lv-about-shell--paired lv-about-shell--mobile-text-first">
+          <div class="lv-about-copy" data-node-id="270:2135">
+            <h2 class="lv-about-title">Depth of Tribunal and Government Experience</h2>
+            <div class="lv-about-prose" data-node-id="270:2137">
+              {experienceParagraphs.map((paragraph) => <p>{paragraph}</p>)}
+            </div>
+          </div>
+
+          <figure class="lv-about-image-card">
+            <img src={aboutExperienceImage} alt="Reviewing legal documents alongside a digital case file." loading="lazy" />
+          </figure>
+        </div>
+      </section>
+
+      <section class="lv-about-section lv-about-section--scope" data-node-id="270:2138">
+        <div class="lv-about-shell lv-about-shell--paired lv-about-shell--paired-reverse">
+          <figure class="lv-about-image-card">
+            <img src={aboutScopeImage} alt="UK visa paperwork and passport handover during a client consultation." loading="lazy" />
+          </figure>
+
+          <div class="lv-about-copy" data-node-id="270:2140">
+            <h2 class="lv-about-title">Focused and Defined Scope of Practice</h2>
+            <div class="lv-about-prose" data-node-id="270:2142">
+              {scopeParagraphs.map((paragraph) => <p>{paragraph}</p>)}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="lv-about-cta" data-node-id="275:2320">
+        <div class="lv-about-cta__inner">
+          <h2>Discuss Your UK Immigration Matter With A Specialist</h2>
+          <p>
+            Whether you require advice on a visa application, sponsor licence compliance, refusal
+            response, or tribunal representation, we provide UK-based legal expertise grounded in
+            immigration law and Home Office practice.
+          </p>
+          <a class="lv-button lv-button--small lv-about-cta__button" href="/#consultations">
+            Book Consultation
+          </a>
+        </div>
+      </section>
+    </main>
+
+    <footer class="lv-footer">
+      <div class="lv-shell lv-footer__shell">
+        <div class="lv-footer__primary">
+          <div class="lv-footer__top">
+            <p>&copy; 2026 Immigration Law Specialists. All rights reserved.</p>
+            <p>Authorised and regulated by the relevant UK legal regulatory bodies.</p>
+          </div>
+
+          <div class="lv-footer__socials" aria-label="Social links">
+            {
+              socialLinks.map((item) => (
+                <a href={item.href} aria-label={item.label}>
+                  <span set:html={item.icon} />
+                </a>
+              ))
+            }
+          </div>
+        </div>
+
+        <div class="lv-footer__offices">
+          <article>
+            <h3>Nigeria Office Address:</h3>
+            <p>Lagos, Nigeria. Meetings arranged by appointment.</p>
+          </article>
+          <article>
+            <h3>UK Office Address:</h3>
+            <p>United Kingdom. Case strategy and legal work managed from the UK.</p>
+          </article>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

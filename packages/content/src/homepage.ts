@@ -35,7 +35,7 @@ export const homePage = {
     ],
     cta: {
       label: "Read More",
-      href: "#why-uk-advice"
+      href: "/about-us/#firm-overview"
     },
     credentials: [
       {

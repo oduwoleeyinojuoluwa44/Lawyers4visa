@@ -6,6 +6,10 @@ import {
 } from "@lawyers4visa/content";
 import { Resend } from "resend";
 
+import {
+  renderConsultationAdminEmail,
+  renderConsultationUserEmail
+} from "./consultation-email";
 import { parseConsultationType } from "./consultation";
 import {
   createConsultationRequest,
@@ -158,18 +162,20 @@ const sendConsultationEmails = async (record: ConsultationRequestRecord) => {
   const userText = [
     `Hello ${record.fullName},`,
     "",
-    "Your consultation request has been received.",
+    "Your consultation request has been received successfully.",
     `Reference number: ${record.referenceNumber}`,
     `Consultation type: ${option.summaryLabel}`,
     "Date & Time: To be confirmed by email",
     "",
-    "We will contact you shortly with the next steps.",
+    "Our secretary will review your request and contact you manually",
+    "to confirm a suitable consultation date and time.",
     "",
     confirmationUrl
   ].join("\n");
 
   const adminText = [
     "A new consultation request has been submitted.",
+    "Please contact the client manually to arrange the consultation time.",
     "",
     `Reference number: ${record.referenceNumber}`,
     `Consultation type: ${option.summaryLabel}`,
@@ -185,16 +191,18 @@ const sendConsultationEmails = async (record: ConsultationRequestRecord) => {
     resend.emails.send({
       from: sender,
       to: record.email,
+      replyTo: notificationEmail,
       subject: `Consultation request received - ${record.referenceNumber}`,
       text: userText,
-      html: `<p>Hello ${record.fullName},</p><p>Your consultation request has been received.</p><p><strong>Reference number:</strong> ${record.referenceNumber}<br /><strong>Consultation type:</strong> ${option.summaryLabel}<br /><strong>Date &amp; Time:</strong> To be confirmed by email</p><p>We will contact you shortly with the next steps.</p><p><a href="${confirmationUrl}">${confirmationUrl}</a></p>`
+      html: renderConsultationUserEmail(record, confirmationUrl)
     }),
     resend.emails.send({
       from: sender,
       to: notificationEmail,
-      subject: `New consultation request - ${record.referenceNumber}`,
+      replyTo: record.email,
+      subject: `Manual scheduling required - ${record.referenceNumber}`,
       text: adminText,
-      html: `<p>A new consultation request has been submitted.</p><p><strong>Reference number:</strong> ${record.referenceNumber}<br /><strong>Consultation type:</strong> ${option.summaryLabel}<br /><strong>Full name:</strong> ${record.fullName}<br /><strong>Email:</strong> ${record.email}<br /><strong>Phone:</strong> ${record.phone}<br /><strong>Organization:</strong> ${record.organization || "N/A"}<br /><strong>Case summary:</strong> ${record.caseSummary || "N/A"}<br /><strong>Submitted at:</strong> ${record.submittedAt}</p>`
+      html: renderConsultationAdminEmail(record, confirmationUrl)
     })
   ];
 

@@ -12,19 +12,21 @@ import ukDeskImage from "../../../../design/png/assets/Image_fx (37) 1.png?url";
 import boardroomImage from "../../../../design/png/assets/Professional_corporate_boardroom_2k_202602101 1.png?url";
 import visaImage from "../../../../design/png/assets/visa-application-composition-with-australian-flag 1.png?url";
 
+export const prerender = true;
+
 const desktopLinks = [
   { label: "About us", href: "about-us/" },
   { label: "Immigration insights", href: "#faq" },
   { label: "How we work", href: "#uk-advice" },
-  { label: "Service", href: "#services" }
+  { label: "Services", href: "/services/" }
 ];
 
 const mobileLinks = [
   { label: "About us", href: "about-us/" },
   { label: "Immigration insights", href: "#faq" },
   { label: "How we work", href: "#uk-advice" },
-  { label: "Service", href: "#services" },
-  { label: "Legal and compliance", href: "#consultations" }
+  { label: "Services", href: "/services/" },
+  { label: "Book consultation", href: "/book-consultation/" }
 ];
 
 const serviceCards = [
@@ -183,7 +185,7 @@ const iconSprites = {
           }
         </nav>
 
-        <a class="lv-button lv-button--header lv-button--header-cta" href="#consultations">
+        <a class="lv-button lv-button--header lv-button--header-cta" href="/book-consultation/">
           <span>Book Consultation</span>
           <span class="lv-button__icon" set:html={chevronDownIcon} />
         </a>
@@ -222,8 +224,8 @@ const iconSprites = {
             </p>
 
             <div class="lv-hero__actions">
-              <a class="lv-button lv-button--solid" href="#consultations">Book Consultation</a>
-              <a class="lv-button lv-button--ghost" href="#services">View Our Services</a>
+              <a class="lv-button lv-button--solid" href="/book-consultation/">Book Consultation</a>
+              <a class="lv-button lv-button--ghost" href="/services/">View Our Services</a>
             </div>
           </div>
         </div>
@@ -365,7 +367,7 @@ const iconSprites = {
                   </p>
                 </div>
               </div>
-              <a class="lv-button lv-button--solid lv-button--small" href="#consultations">
+              <a class="lv-button lv-button--solid lv-button--small" href="/book-consultation/?type=corporate-immigration">
                 Book Consultation
               </a>
             </div>
@@ -400,7 +402,7 @@ const iconSprites = {
                   </p>
                 </div>
               </div>
-              <a class="lv-button lv-button--solid lv-button--small" href="#consultations">
+              <a class="lv-button lv-button--solid lv-button--small" href="/book-consultation/?type=individual-immigration">
                 Book Consultation
               </a>
             </div>
@@ -480,7 +482,7 @@ const iconSprites = {
                   clients consulting directly in the UK.
                 </p>
               </div>
-              <a class="lv-button lv-button--solid lv-button--small" href="#consultations">
+              <a class="lv-button lv-button--solid lv-button--small" href="/book-consultation/">
                 Book Consultation
               </a>
             </div>
@@ -538,7 +540,7 @@ const iconSprites = {
             response, or tribunal representation, we provide UK-based legal expertise grounded in
             immigration law and Home Office practice.
           </p>
-          <a class="lv-button lv-button--cta" href="#consultations">Book Consultation</a>
+          <a class="lv-button lv-button--cta" href="/book-consultation/">Book Consultation</a>
         </div>
       </section>
     </main>

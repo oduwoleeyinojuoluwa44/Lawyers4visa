@@ -17,7 +17,8 @@
     "build": "turbo build",
     "lint": "turbo lint",
     "typecheck": "turbo typecheck",
-    "clean": "turbo clean"
+    "clean": "turbo clean",
+    "postinstall": "node scripts/patch-astro-internal-helpers.mjs"
   },
   "devDependencies": {
     "@types/node": "^25.5.0",

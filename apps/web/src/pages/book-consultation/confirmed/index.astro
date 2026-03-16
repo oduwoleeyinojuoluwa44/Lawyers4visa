@@ -1,0 +1,94 @@
+---
+import {
+  consultationOptionsByType,
+  siteMetadata,
+  type ConsultationRequestRecord
+} from "@lawyers4visa/content";
+
+import SiteLayout from "../../../layouts/SiteLayout.astro";
+import { loadConsultationBooking } from "../../../lib/booking.server";
+
+const referenceNumber = Astro.url.searchParams.get("reference")?.trim() ?? "";
+let record: ConsultationRequestRecord | null = null;
+
+if (referenceNumber) {
+  try {
+    record = await loadConsultationBooking(referenceNumber);
+  } catch {
+    Astro.response.status = 500;
+  }
+}
+
+if (!record) {
+  Astro.response.status = Astro.response.status === 500 ? 500 : 404;
+}
+
+const consultationLabel = record
+  ? consultationOptionsByType[record.consultationType].summaryLabel
+  : null;
+---
+
+<SiteLayout
+  title={`Consultation Confirmed | ${siteMetadata.title}`}
+  description="Confirmation details for a submitted consultation request."
+  bodyClass="booking-page booking-page--confirmed"
+  currentPath="/book-consultation/confirmed/"
+>
+  <main class="lv-main lv-booking-main">
+    <section class="lv-booking-step">
+      <div class="lv-shell lv-booking-step__shell">
+        {
+          record ? (
+            <div class="lv-booking-card lv-booking-card--confirmed">
+              <div class="lv-booking-progress">
+                <p>Step 3 of 3</p>
+                <div class="lv-booking-progress__track" aria-hidden="true">
+                  <span class="lv-booking-progress__fill is-step-3"></span>
+                </div>
+              </div>
+
+              <div class="lv-booking-heading">
+                <h1>Consultation Confirmed</h1>
+                <p>
+                  Your consultation has been successfully scheduled. A confirmation email has been
+                  sent with appointment details and next steps.
+                </p>
+              </div>
+
+              <div class="lv-booking-summary">
+                <div class="lv-booking-summary__row">
+                  <span>Consultation type</span>
+                  <strong>{consultationLabel}</strong>
+                </div>
+                <div class="lv-booking-summary__row">
+                  <span>Date &amp; Time</span>
+                  <strong>To be confirmed by email</strong>
+                </div>
+                <div class="lv-booking-summary__row">
+                  <span>Reference Number</span>
+                  <strong>{record.referenceNumber}</strong>
+                </div>
+              </div>
+
+              <a class="lv-booking-actions__back" href="/">Return to Home</a>
+            </div>
+          ) : (
+            <div class="lv-booking-card lv-booking-card--missing">
+              <div class="lv-booking-heading">
+                <h1>Confirmation Not Found</h1>
+                <p>
+                  The confirmation reference could not be found. Please submit a consultation request
+                  first or check the reference number in your email.
+                </p>
+              </div>
+
+              <a class="lv-button lv-button--small" href="/book-consultation/">
+                Book Consultation
+              </a>
+            </div>
+          )
+        }
+      </div>
+    </section>
+  </main>
+</SiteLayout>

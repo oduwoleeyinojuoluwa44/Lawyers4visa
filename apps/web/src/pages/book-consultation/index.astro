@@ -1,0 +1,63 @@
+---
+import { consultationOptions, siteMetadata } from "@lawyers4visa/content";
+
+import SiteLayout from "../../layouts/SiteLayout.astro";
+import { parseConsultationType } from "../../lib/consultation";
+
+const selectedType = parseConsultationType(Astro.url.searchParams.get("type"));
+---
+
+<SiteLayout
+  title={`Book Consultation | ${siteMetadata.title}`}
+  description="Select the appropriate consultation type and begin the three-step request flow."
+  bodyClass="booking-page booking-page--selection"
+  currentPath="/book-consultation/"
+>
+  <main class="lv-main lv-booking-main">
+    <section class="lv-booking-step">
+      <div class="lv-shell lv-booking-step__shell">
+        <form class="lv-booking-card" method="get" action="/book-consultation/information/">
+          <div class="lv-booking-progress">
+            <p>Step 1 of 3</p>
+            <div class="lv-booking-progress__track" aria-hidden="true">
+              <span class="lv-booking-progress__fill is-step-1"></span>
+            </div>
+          </div>
+
+          <div class="lv-booking-heading">
+            <h1>Book a consultation</h1>
+            <p>Select the type of consultation appropriate to your case.</p>
+          </div>
+
+          <div class="lv-booking-options">
+            {
+              consultationOptions.map((option, index) => (
+                <label class:list={["lv-booking-option", { "is-selected": selectedType === option.type }]}>
+                  <input
+                    type="radio"
+                    name="type"
+                    value={option.type}
+                    checked={selectedType === option.type}
+                    required={index === 0}
+                  />
+                  <span class="lv-booking-option__control" aria-hidden="true"></span>
+                  <span class="lv-booking-option__content">
+                    <strong>{option.title}</strong>
+                    <span>{option.description}</span>
+                    <span class="lv-booking-option__duration">
+                      Time: <b>{option.duration}</b>
+                    </span>
+                  </span>
+                </label>
+              ))
+            }
+          </div>
+
+          <button class="lv-button lv-button--small lv-booking-card__action" type="submit">
+            Continue
+          </button>
+        </form>
+      </div>
+    </section>
+  </main>
+</SiteLayout>

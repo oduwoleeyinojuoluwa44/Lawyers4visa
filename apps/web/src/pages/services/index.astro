@@ -1,0 +1,66 @@
+---
+import { servicesPage, siteMetadata } from "@lawyers4visa/content";
+
+import SiteCtaBand from "../../components/SiteCtaBand.astro";
+import SiteLayout from "../../layouts/SiteLayout.astro";
+
+export const prerender = true;
+---
+
+<SiteLayout
+  title={`Services | ${siteMetadata.title}`}
+  description="Structured legal advice and representation across business, family, appeals, and sponsor-related UK immigration matters."
+  bodyClass="services-page"
+  currentPath="/services/"
+>
+  <main class="lv-main lv-services-main">
+    <section class="lv-services-hero">
+      <div class="lv-shell lv-services-hero__shell">
+        <div class="lv-services-hero__copy">
+          <h1>{servicesPage.title}</h1>
+          <p>{servicesPage.intro}</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="lv-services-sections">
+      <div class="lv-shell lv-services-sections__shell">
+        {
+          servicesPage.sections.map((section, index) => (
+            <article class:list={["lv-service-detail", { "is-reversed": index % 2 === 1 }]}>
+              <figure class="lv-service-detail__media">
+                <img src={section.imageSrc} alt={section.imageAlt} loading="lazy" />
+              </figure>
+
+              <div class="lv-service-detail__content">
+                <div class="lv-service-detail__stack">
+                  <h2>{section.title}</h2>
+                  <div class="lv-service-detail__prose">
+                    {section.description.map((paragraph) => <p>{paragraph}</p>)}
+                  </div>
+                </div>
+
+                <ul class="lv-service-detail__list">
+                  {section.bullets.map((item) => <li>{item}</li>)}
+                </ul>
+
+                <a
+                  class="lv-button lv-button--small"
+                  href={`/book-consultation/?type=${section.consultationType}`}
+                >
+                  Book Consultation
+                </a>
+              </div>
+            </article>
+          ))
+        }
+      </div>
+    </section>
+
+    <SiteCtaBand
+      title={servicesPage.cta.title}
+      description={servicesPage.cta.description}
+      href={servicesPage.cta.href}
+    />
+  </main>
+</SiteLayout>

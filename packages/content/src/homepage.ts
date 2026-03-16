@@ -6,11 +6,11 @@ export const homePage = {
       "A UK-based immigration law firm advising corporate organisations and private clients on complex visa applications, appeals, compliance, and strategic UK entry planning.",
     primaryCta: {
       label: "Book Consultation",
-      href: "#book-consultation"
+      href: "/book-consultation/"
     },
     secondaryCta: {
       label: "View Our Services",
-      href: "#services"
+      href: "/services/"
     },
     evidence: [
       "Tribunal-grade immigration expertise",
@@ -135,7 +135,7 @@ export const homePage = {
     ],
     cta: {
       label: "Book Consultation",
-      href: "#book-consultation"
+      href: "/book-consultation/"
     }
   },
   whyUkAdvice: {
@@ -161,7 +161,7 @@ export const homePage = {
     ],
     cta: {
       label: "Book Consultation",
-      href: "#book-consultation"
+      href: "/book-consultation/"
     }
   },
   faqs: [
@@ -244,7 +244,7 @@ export const homePage = {
       "If the matter is commercially important, personally significant, or already complicated by a refusal or timing risk, start with a structured consultation.",
     primaryCta: {
       label: "Book Consultation",
-      href: "#book-consultation"
+      href: "/book-consultation/"
     }
   },
   footer: {

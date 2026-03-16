@@ -1,0 +1,23 @@
+---
+type Props = {
+  title: string;
+  description: string;
+  href: string;
+  label?: string;
+};
+
+const {
+  title,
+  description,
+  href,
+  label = "Book Consultation"
+} = Astro.props;
+---
+
+<section class="lv-cta-band">
+  <div class="lv-shell lv-cta-band__shell">
+    <h2>{title}</h2>
+    <p>{description}</p>
+    <a class="lv-button lv-button--cta" href={href}>{label}</a>
+  </div>
+</section>

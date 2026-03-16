@@ -1,0 +1,209 @@
+---
+import { consultationOptions, siteMetadata } from "@lawyers4visa/content";
+
+import SiteLayout from "../../../layouts/SiteLayout.astro";
+import {
+  type BookingFormErrors,
+  emptyBookingFormValues,
+  getBookingFormValues,
+  getRequestIpAddress,
+  submitConsultationBooking,
+  validateBookingForm
+} from "../../../lib/booking.server";
+import { parseConsultationType } from "../../../lib/consultation";
+
+const requestedType = parseConsultationType(Astro.url.searchParams.get("type"));
+const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
+
+let values = emptyBookingFormValues(requestedType);
+let errors: BookingFormErrors = {};
+let responseStatus: 400 | 500 | null = null;
+
+if (Astro.request.method === "POST") {
+  const formData = await Astro.request.formData();
+  values = getBookingFormValues(formData, requestedType);
+
+  const validation = validateBookingForm(values);
+
+  if (validation.input) {
+    try {
+      const submission = await submitConsultationBooking(
+        validation.input,
+        values.turnstileToken,
+        getRequestIpAddress(Astro.request.headers)
+      );
+
+      if (submission.record) {
+        return Astro.redirect(
+          `/book-consultation/confirmed/?reference=${encodeURIComponent(submission.record.referenceNumber)}`,
+          303
+        );
+      }
+
+      errors = submission.errors;
+      responseStatus = 400;
+    } catch (error) {
+      errors = {
+        form:
+          error instanceof Error
+            ? error.message
+            : "The consultation request could not be submitted. Please try again."
+      };
+      responseStatus = 500;
+    }
+  } else {
+    errors = validation.errors;
+    responseStatus = 400;
+  }
+}
+
+if (responseStatus) {
+  Astro.response.status = responseStatus;
+}
+
+const selectedType = parseConsultationType(values.consultationType) ?? requestedType;
+const backHref = selectedType
+  ? `/book-consultation/?type=${selectedType}`
+  : "/book-consultation/";
+---
+
+<SiteLayout
+  title={`Your Information | ${siteMetadata.title}`}
+  description="Provide your contact information and case details to submit a consultation request."
+  bodyClass="booking-page booking-page--information"
+  currentPath="/book-consultation/information/"
+>
+  {turnstileSiteKey && (
+    <script
+      slot="head"
+      is:inline
+      src="https://challenges.cloudflare.com/turnstile/v0/api.js"
+      async
+      defer
+    ></script>
+  )}
+
+  <main class="lv-main lv-booking-main">
+    <section class="lv-booking-step">
+      <div class="lv-shell lv-booking-step__shell">
+        <div class="lv-booking-card lv-booking-card--form">
+          <div class="lv-booking-progress">
+            <p>Step 2 of 3</p>
+            <div class="lv-booking-progress__track" aria-hidden="true">
+              <span class="lv-booking-progress__fill is-step-2"></span>
+            </div>
+          </div>
+
+          <div class="lv-booking-heading">
+            <h1>Your Information</h1>
+            <p>Please provide all the information below to enable us prepare your consultation.</p>
+          </div>
+
+          <form class="lv-booking-form" method="post">
+            <div class="lv-booking-field">
+              <label for="fullName">Full Name</label>
+              <input
+                id="fullName"
+                name="fullName"
+                type="text"
+                value={values.fullName}
+                autocomplete="name"
+                required
+              />
+              {errors.fullName && <p class="lv-booking-field__error">{errors.fullName}</p>}
+            </div>
+
+            <div class="lv-booking-field">
+              <label for="email">Email address</label>
+              <input
+                id="email"
+                name="email"
+                type="email"
+                value={values.email}
+                autocomplete="email"
+                required
+              />
+              {errors.email && <p class="lv-booking-field__error">{errors.email}</p>}
+            </div>
+
+            <div class="lv-booking-field">
+              <label for="phone">Phone number</label>
+              <input
+                id="phone"
+                name="phone"
+                type="tel"
+                value={values.phone}
+                autocomplete="tel"
+                required
+              />
+              {errors.phone && <p class="lv-booking-field__error">{errors.phone}</p>}
+            </div>
+
+            <div class="lv-booking-field">
+              <label for="organization">Organization <span>(Optional)</span></label>
+              <input
+                id="organization"
+                name="organization"
+                type="text"
+                value={values.organization}
+                autocomplete="organization"
+              />
+            </div>
+
+            <div class="lv-booking-field">
+              <label for="consultationType">Case Type</label>
+              <select id="consultationType" name="consultationType" required>
+                <option value="">Select the case type</option>
+                {
+                  consultationOptions.map((option) => (
+                    <option value={option.type} selected={values.consultationType === option.type}>
+                      {option.title}
+                    </option>
+                  ))
+                }
+              </select>
+              {errors.consultationType && (
+                <p class="lv-booking-field__error">{errors.consultationType}</p>
+              )}
+            </div>
+
+            <div class="lv-booking-field">
+              <label for="caseSummary">Brief Description Of The Case <span>(Optional)</span></label>
+              <textarea
+                id="caseSummary"
+                name="caseSummary"
+                rows="5"
+              >{values.caseSummary}</textarea>
+            </div>
+
+            <p class="lv-booking-form__confidentiality">
+              All information provided is treated confidentially and in accordance with professional legal standards.
+            </p>
+
+            <div class="lv-booking-field lv-booking-field--turnstile">
+              {turnstileSiteKey ? (
+                <div class="cf-turnstile" data-sitekey={turnstileSiteKey}></div>
+              ) : (
+                <p class="lv-booking-field__warning">
+                  Turnstile is not configured for this environment yet. Set
+                  <code> PUBLIC_TURNSTILE_SITE_KEY </code>
+                  before testing live submissions.
+                </p>
+              )}
+              {errors.turnstileToken && (
+                <p class="lv-booking-field__error">{errors.turnstileToken}</p>
+              )}
+            </div>
+
+            {errors.form && <p class="lv-booking-field__error">{errors.form}</p>}
+
+            <div class="lv-booking-actions">
+              <a class="lv-booking-actions__back" href={backHref}>Back</a>
+              <button class="lv-button lv-button--small" type="submit">Book appointment</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+</SiteLayout>

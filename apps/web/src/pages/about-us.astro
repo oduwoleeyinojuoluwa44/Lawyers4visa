@@ -8,19 +8,21 @@ const aboutValuesBottomImage = "/images/about/about-values-bottom.png";
 const aboutExperienceImage = "/images/about/about-experience.jpg";
 const aboutScopeImage = "/images/about/about-scope.jpg";
 
+export const prerender = true;
+
 const desktopLinks = [
   { label: "About us", href: "/about-us/", current: true },
   { label: "Immigration insights", href: "/#faq" },
   { label: "How we work", href: "/#uk-advice" },
-  { label: "Service", href: "/#services" }
+  { label: "Services", href: "/services/" }
 ];
 
 const mobileLinks = [
   { label: "About us", href: "/about-us/", current: true },
   { label: "Immigration insights", href: "/#faq" },
   { label: "How we work", href: "/#uk-advice" },
-  { label: "Service", href: "/#services" },
-  { label: "Legal and compliance", href: "/#consultations" }
+  { label: "Services", href: "/services/" },
+  { label: "Book consultation", href: "/book-consultation/" }
 ];
 
 const overviewParagraphs = [
@@ -97,7 +99,7 @@ const chevronDownIcon = `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m7
           }
         </nav>
 
-        <a class="lv-button lv-button--header lv-button--header-cta" href="/#consultations">
+        <a class="lv-button lv-button--header lv-button--header-cta" href="/book-consultation/">
           <span>Book Consultation</span>
           <span class="lv-button__icon" set:html={chevronDownIcon} />
         </a>
@@ -199,7 +201,7 @@ const chevronDownIcon = `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m7
             response, or tribunal representation, we provide UK-based legal expertise grounded in
             immigration law and Home Office practice.
           </p>
-          <a class="lv-button lv-button--small lv-about-cta__button" href="/#consultations">
+          <a class="lv-button lv-button--small lv-about-cta__button" href="/book-consultation/">
             Book Consultation
           </a>
         </div>

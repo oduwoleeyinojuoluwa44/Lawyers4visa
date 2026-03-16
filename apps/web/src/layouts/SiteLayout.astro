@@ -1,0 +1,43 @@
+---
+import "@lawyers4visa/theme/index.css";
+import { siteMetadata } from "@lawyers4visa/content";
+
+import SiteFooter from "../components/SiteFooter.astro";
+import SiteHeader from "../components/SiteHeader.astro";
+
+type Props = {
+  title: string;
+  description: string;
+  bodyClass?: string;
+  currentPath?: string;
+  hideHeader?: boolean;
+  hideFooter?: boolean;
+};
+
+const {
+  title,
+  description,
+  bodyClass = "site-page",
+  currentPath = Astro.url.pathname,
+  hideHeader = false,
+  hideFooter = false
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#ffffff" />
+    <meta property="og:site_name" content={siteMetadata.title} />
+    <slot name="head" />
+  </head>
+  <body class={bodyClass} id="top">
+    {!hideHeader && <SiteHeader currentPath={currentPath} />}
+    <slot />
+    {!hideFooter && <SiteFooter />}
+  </body>
+</html>

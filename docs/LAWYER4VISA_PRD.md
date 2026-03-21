@@ -17,7 +17,7 @@ immigration law firm with an in-market Lagos presence targeting corporate client
 high-net-worth individuals (HNWIs) seeking reliable, expert guidance on complex UK
 immigration matters, a need we are uniquely positioned to fulfil.
 The Platform
-lawyersforvisa.com is the dedicated digital platform for this expansion. It operates as a
+lawyersforvisas.com is the dedicated digital platform for this expansion. It operates as a
 subsidiary brand of Yemi Oguntolu and Co - distinct from the parent firm's website
 (yemioguntoluandco.com) and is purpose-built to attract, inform, and convert high-intent visitors
 into engaged clients. The site is the firm's primary client acquisition channel in the Nigerian
@@ -32,15 +32,15 @@ firm's broader legal services content
 
 ## Page 1 of 10
 
-- Establishes lawyersforvisa.com as a recognisable standalone authority in the UK
+- Establishes lawyersforvisas.com as a recognisable standalone authority in the UK
 immigration advisory space
 Product Overview
-lawyersforvisa.com is a professional-grade informational and lead-generation website for a
+lawyersforvisas.com is a professional-grade informational and lead-generation website for a
 regulated UK immigration law practice. It is not a self-service visa tool, a document submission
 platform, or a case management portal. It is the firm's digital front door designed to build trust,
 demonstrate expertise, and convert qualified visitors into booked consultations.
 Attribute 	Detail
-Product name 	lawyersforvisa.com
+Product name 	lawyersforvisas.com
 Product type 	B2C and B2B informational + lead-generation website
 Primary audience 	Nigerian corporates and HNWIs seeking UK immigration advice
 Secondary audience 	International applicants (UK diaspora, professionals) researching UK
@@ -126,7 +126,7 @@ Business Objectives
 B1 Generate qualified consultation leads from Nigeria
 and internationally to support Year 1 revenue target
 Month 1-12 	Critical
-B2 Establish lawyersforvisa.com as the go-to digital
+B2 Establish lawyersforvisas.com as the go-to digital
 presence for premium UK immigration advice in
 West Africa
 Month 6-18 	High

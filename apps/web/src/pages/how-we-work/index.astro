@@ -1,0 +1,52 @@
+---
+import { howWeWorkPage, siteMetadata } from '@lawyers4visa/content';
+
+import SiteCtaBand from '../../components/SiteCtaBand.astro';
+import SiteLayout from '../../layouts/SiteLayout.astro';
+
+export const prerender = true;
+---
+
+<SiteLayout
+  title={`How We Work | ${siteMetadata.title}`}
+  description='Learn how immigration matters are assessed, structured, prepared, submitted, and advised on after decision.'
+  bodyClass='how-we-work-page'
+  currentPath='/how-we-work/'
+>
+  <main class='lv-main lv-process-main'>
+    <section class='lv-process-hero'>
+      <div class='lv-process-hero__shell'>
+        <p class='lv-process-hero__eyebrow'>{howWeWorkPage.eyebrow}</p>
+        <h1>{howWeWorkPage.title}</h1>
+        <p class='lv-process-hero__intro'>{howWeWorkPage.intro}</p>
+      </div>
+    </section>
+
+    <section class='lv-process-journey' aria-labelledby='how-we-work-steps'>
+      <div class='lv-process-journey__shell'>
+        <h2 class='lv-process-journey__sr-only' id='how-we-work-steps'>Process steps</h2>
+        {
+          howWeWorkPage.steps.map((step, index) => (
+            <article class:list={['lv-process-step', { 'is-right': index % 2 === 1, 'is-left': index % 2 === 0 }]}>
+              <div class='lv-process-step__lane'>
+                <span class='lv-process-step__marker' aria-hidden='true'></span>
+                <div class='lv-process-step__card'>
+                  <div class='lv-process-step__panel'>
+                    <h2>{step.title}</h2>
+                    <p>{step.description}</p>
+                  </div>
+                </div>
+              </div>
+            </article>
+          ))
+        }
+      </div>
+    </section>
+
+    <SiteCtaBand
+      title={howWeWorkPage.cta.title}
+      description={howWeWorkPage.cta.description}
+      href={howWeWorkPage.cta.href}
+    />
+  </main>
+</SiteLayout>

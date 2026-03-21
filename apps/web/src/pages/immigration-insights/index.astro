@@ -1,0 +1,170 @@
+---
+import {
+  immigrationInsightArticles,
+  immigrationInsightCategories,
+  immigrationInsightsPage,
+  siteMetadata
+} from "@lawyers4visa/content";
+
+import SiteCtaBand from "../../components/SiteCtaBand.astro";
+import SiteLayout from "../../layouts/SiteLayout.astro";
+
+export const prerender = true;
+
+const filterLabels = ["All", ...immigrationInsightCategories];
+---
+
+<SiteLayout
+  title={`Immigration Insights | ${siteMetadata.title}`}
+  description={immigrationInsightsPage.description}
+  bodyClass="immigration-insights-page"
+  currentPath="/immigration-insights/"
+>
+  <main class="lv-main lv-insights-main" data-insights-root>
+    <section class="lv-insights-hero">
+      <div class="lv-shell lv-insights-hero__shell">
+        <div class="lv-insights-hero__copy">
+          <p class="lv-insights-hero__eyebrow">{immigrationInsightsPage.eyebrow}</p>
+          <h1>{immigrationInsightsPage.title}</h1>
+          <p class="lv-insights-hero__description">{immigrationInsightsPage.description}</p>
+
+          <div class="lv-insights-hero__actions">
+            <a class="lv-button lv-button--solid" href={immigrationInsightsPage.primaryCta.href}>
+              {immigrationInsightsPage.primaryCta.label}
+            </a>
+            <a class="lv-button lv-button--ghost" href={immigrationInsightsPage.secondaryCta.href}>
+              {immigrationInsightsPage.secondaryCta.label}
+            </a>
+          </div>
+        </div>
+
+        <div class="lv-insights-hero__stack" aria-hidden="true">
+          <div class="lv-insights-hero__image lv-insights-hero__image--primary">
+            <img
+              src={immigrationInsightsPage.heroImages.primary}
+              alt=""
+              loading="eager"
+              decoding="async"
+            />
+          </div>
+          <div class="lv-insights-hero__image lv-insights-hero__image--secondary">
+            <img
+              src={immigrationInsightsPage.heroImages.secondary}
+              alt=""
+              loading="eager"
+              decoding="async"
+            />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="lv-insights-filters" aria-label="Immigration insight categories">
+      <div class="lv-shell lv-insights-filters__shell">
+        {
+          filterLabels.map((label, index) => (
+            <button
+              type="button"
+              class:list={["lv-insights-filter", { "is-active": index === 0 }]}
+              data-filter-button
+              data-filter-value={label}
+              aria-pressed={index === 0 ? "true" : "false"}
+            >
+              {label}
+            </button>
+          ))
+        }
+      </div>
+    </section>
+
+    <section class="lv-insights-listing" aria-labelledby="immigration-insights-grid-heading">
+      <div class="lv-shell lv-insights-listing__shell">
+        <h2 class="lv-insights-listing__sr-only" id="immigration-insights-grid-heading">
+          Immigration insights
+        </h2>
+
+        <div class="lv-insights-grid" data-insights-grid>
+          {
+            immigrationInsightArticles.map((article) => (
+              <article class="lv-insight-card" data-article-card data-category={article.category}>
+                <div class="lv-insight-card__body">
+                  <h3>
+                    <a href={`/immigration-insights/${article.slug}/`}>{article.title}</a>
+                  </h3>
+                  <p>{article.excerpt}</p>
+                </div>
+
+                <div class="lv-insight-card__meta">
+                  <span>{article.publishedLabel}</span>
+                  <span>{article.category}</span>
+                </div>
+
+                <a class="lv-button lv-button--solid lv-button--card" href={`/immigration-insights/${article.slug}/`}>
+                  Read Full Article
+                </a>
+              </article>
+            ))
+          }
+        </div>
+
+        <p class="lv-insights-empty" data-insights-empty hidden>
+          No insights are available in this category yet.
+        </p>
+      </div>
+    </section>
+
+    <section class="lv-insights-pagination" aria-label="Insights pagination">
+      <div class="lv-shell lv-insights-pagination__shell">
+        <span class="is-active">1</span>
+        <span>2</span>
+        <span>3</span>
+        <span>Next</span>
+      </div>
+    </section>
+
+    <SiteCtaBand
+      title={immigrationInsightsPage.cta.title}
+      description={immigrationInsightsPage.cta.description}
+      href={immigrationInsightsPage.cta.href}
+    />
+  </main>
+
+  <script is:inline>
+    const root = document.querySelector("[data-insights-root]");
+
+    if (root) {
+      const filterButtons = Array.from(root.querySelectorAll("[data-filter-button]"));
+      const cards = Array.from(root.querySelectorAll("[data-article-card]"));
+      const emptyState = root.querySelector("[data-insights-empty]");
+
+      const applyFilter = (value) => {
+        let visibleCount = 0;
+
+        cards.forEach((card) => {
+          const isVisible = value === "All" || card.dataset.category === value;
+          card.hidden = !isVisible;
+
+          if (isVisible) {
+            visibleCount += 1;
+          }
+        });
+
+        if (emptyState) {
+          emptyState.hidden = visibleCount !== 0;
+        }
+
+        filterButtons.forEach((button) => {
+          const isActive = button.dataset.filterValue === value;
+          button.classList.toggle("is-active", isActive);
+          button.setAttribute("aria-pressed", isActive ? "true" : "false");
+        });
+      };
+
+      filterButtons.forEach((button) => {
+        button.addEventListener("click", () => {
+          applyFilter(button.dataset.filterValue || "All");
+        });
+      });
+    }
+  </script>
+</SiteLayout>

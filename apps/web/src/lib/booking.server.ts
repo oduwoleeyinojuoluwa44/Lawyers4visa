@@ -142,7 +142,7 @@ const getResendClient = () => {
 const getEmailConfig = () => {
   const sender = import.meta.env.RESEND_FROM_EMAIL || "LawyerForVisa <onboarding@resend.dev>";
   const notificationEmail =
-    import.meta.env.CONSULTATION_NOTIFICATION_EMAIL || "hello@lawyersforvisas.com";
+    import.meta.env.CONSULTATION_NOTIFICATION_EMAIL || "hello@lawyersforvisa.com";
   const siteUrl = import.meta.env.PUBLIC_SITE_URL || "http://localhost:4321";
 
   return { notificationEmail, sender, siteUrl };

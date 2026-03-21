@@ -3,58 +3,54 @@ import {
   consultationNavigationCta,
   mobileNavigation,
   primaryNavigation
-} from "@lawyers4visa/content";
+} from '@lawyers4visa/content';
 
 type Props = {
   currentPath?: string;
 };
 
-const { currentPath = "/" } = Astro.props;
+const { currentPath = '/' } = Astro.props;
 
-const chevronDownIcon = `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m7 10 5 5 5-5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+const chevronDownIcon = `<svg viewBox='0 0 24 24' aria-hidden='true'><path d='m7 10 5 5 5-5' fill='none' stroke='currentColor' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/></svg>`;
 
 const isActive = (href: string) => {
-  if (href === "/about-us/") {
-    return currentPath === "/about-us/";
+  if (href.startsWith('/#')) {
+    return false;
   }
 
-  if (href === "/services/") {
-    return currentPath === "/services/";
-  }
-
-  return false;
+  return currentPath === href;
 };
 ---
 
-<header class="lv-header">
-  <div class="lv-shell lv-header__shell">
-    <a class="lv-brand" href="/" aria-label="LawyerForVisa home">LawyerForVisa</a>
+<header class='lv-header'>
+  <div class='lv-shell lv-header__shell'>
+    <a class='lv-brand' href='/' aria-label='LawyerForVisa home'>LawyerForVisa</a>
 
-    <nav class="lv-nav" aria-label="Primary navigation">
+    <nav class='lv-nav' aria-label='Primary navigation'>
       {
         primaryNavigation.map((link) => (
-          <a href={link.href} class:list={{ "is-active": isActive(link.href) }}>{link.label}</a>
+          <a href={link.href} class:list={{ 'is-active': isActive(link.href) }}>{link.label}</a>
         ))
       }
     </nav>
 
-    <a class="lv-button lv-button--header lv-button--header-cta" href={consultationNavigationCta.href}>
+    <a class='lv-button lv-button--header lv-button--header-cta' href={consultationNavigationCta.href}>
       <span>{consultationNavigationCta.label}</span>
-      <span class="lv-button__icon" set:html={chevronDownIcon} />
+      <span class='lv-button__icon' set:html={chevronDownIcon} />
     </a>
 
-    <details class="lv-mobile-menu">
-      <summary aria-label="Open navigation menu">
+    <details class='lv-mobile-menu'>
+      <summary aria-label='Open navigation menu'>
         <span></span>
         <span></span>
         <span></span>
       </summary>
 
-      <nav class="lv-mobile-menu__panel" aria-label="Mobile navigation">
-        <a class="lv-mobile-menu__brand" href="/">LawyerForVisa</a>
+      <nav class='lv-mobile-menu__panel' aria-label='Mobile navigation'>
+        <a class='lv-mobile-menu__brand' href='/'>LawyerForVisa</a>
         {
           mobileNavigation.map((link) => (
-            <a href={link.href} class:list={{ "is-active": isActive(link.href) }}>{link.label}</a>
+            <a href={link.href} class:list={{ 'is-active': isActive(link.href) }}>{link.label}</a>
           ))
         }
       </nav>

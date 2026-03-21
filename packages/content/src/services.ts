@@ -10,9 +10,12 @@ export type ServicePageSection = {
 };
 
 export const servicesPage = {
-  title: "Services",
+  title: "Immigration Legal Services",
   intro:
-    "Structured legal advice and representation across the full spectrum of UK immigration law.",
+    "Our legal team provides structured immigration advice and formal representation grounded in regulatory practice and evidential standards. Every case is prepared with precision to present the strongest possible legal position.",
+  heroImageSrc: "/images/services/services-hero.jpg",
+  heroImageAlt:
+    "Immigration law books and a courtroom gavel arranged on a polished wooden desk.",
   sections: [
     {
       title: "Representations and Administrative Review",

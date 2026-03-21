@@ -15,10 +15,21 @@ export const prerender = true;
 >
   <main class="lv-main lv-services-main">
     <section class="lv-services-hero">
-      <div class="lv-shell lv-services-hero__shell">
-        <div class="lv-services-hero__copy">
-          <h1>{servicesPage.title}</h1>
-          <p>{servicesPage.intro}</p>
+      <div class="lv-services-hero__media">
+        <img
+          class="lv-services-hero__image"
+          src={servicesPage.heroImageSrc}
+          alt={servicesPage.heroImageAlt}
+          loading="eager"
+        />
+        <div class="lv-services-hero__mist" aria-hidden="true"></div>
+        <div class="lv-services-hero__halo" aria-hidden="true"></div>
+        <div class="lv-shell lv-services-hero__shell">
+          <div class="lv-services-hero__copy">
+            <h1>{servicesPage.title}</h1>
+            <p>{servicesPage.intro}</p>
+            <a class="lv-button lv-button--small" href={servicesPage.cta.href}>Book Consultation</a>
+          </div>
         </div>
       </div>
     </section>

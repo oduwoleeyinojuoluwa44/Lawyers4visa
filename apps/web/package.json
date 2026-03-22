@@ -14,6 +14,7 @@
     "@lawyers4visa/content": "workspace:*",
     "@lawyers4visa/theme": "workspace:*",
     "@astrojs/vercel": "^10.0.0",
+    "postal-mime": "^2.5.0",
     "@sanity/client": "^7.11.2",
     "astro": "latest",
     "resend": "^6.2.0"

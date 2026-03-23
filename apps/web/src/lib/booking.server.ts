@@ -4,7 +4,7 @@ import {
   type ConsultationRequestRecord,
   type ConsultationType
 } from "@lawyers4visa/content";
-import { Resend } from "resend";
+import "postal-mime";
 
 import {
   renderConsultationAdminEmail,
@@ -129,13 +129,14 @@ export const createReferenceNumber = () => {
   return `L4V-${token}`;
 };
 
-const getResendClient = () => {
+const getResendClient = async () => {
   const apiKey = import.meta.env.RESEND_API_KEY;
 
   if (!apiKey) {
     return null;
   }
 
+  const { Resend } = await import("resend");
   return new Resend(apiKey);
 };
 
@@ -149,7 +150,7 @@ const getEmailConfig = () => {
 };
 
 const sendConsultationEmails = async (record: ConsultationRequestRecord) => {
-  const resend = getResendClient();
+  const resend = await getResendClient();
 
   if (!resend) {
     return;

@@ -2,7 +2,7 @@ import {
   type ConsultationRequestRecord,
   type ConsultationType
 } from "@lawyers4visa/content";
-import { createClient } from "@sanity/client";
+import "get-it";
 
 const apiVersion = "2026-03-16";
 
@@ -27,8 +27,9 @@ const getSanityConfig = () => {
   return { projectId, dataset, token };
 };
 
-const getSanityClient = () => {
+const getSanityClient = async () => {
   const { projectId, dataset, token } = getSanityConfig();
+  const { createClient } = await import("@sanity/client");
 
   return createClient({
     apiVersion,
@@ -42,7 +43,7 @@ const getSanityClient = () => {
 export const createConsultationRequest = async (
   record: ConsultationRequestRecord
 ): Promise<ConsultationRequestRecord> => {
-  const client = getSanityClient();
+  const client = await getSanityClient();
   const document: ConsultationRequestDocument = {
     _id: `consultationRequest.${record.referenceNumber}`,
     _type: "consultationRequest",
@@ -67,7 +68,7 @@ export const createConsultationRequest = async (
 export const getConsultationRequestByReference = async (
   referenceNumber: string
 ): Promise<ConsultationRequestRecord | null> => {
-  const client = getSanityClient();
+  const client = await getSanityClient();
 
   const result = await client.fetch<ConsultationRequestQueryResult | null>(
     `*[_type == "consultationRequest" && referenceNumber == $referenceNumber][0]{

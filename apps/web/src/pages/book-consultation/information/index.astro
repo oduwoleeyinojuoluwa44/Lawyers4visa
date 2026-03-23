@@ -183,13 +183,7 @@ const backHref = selectedType
             <div class="lv-booking-field lv-booking-field--turnstile">
               {turnstileSiteKey ? (
                 <div class="cf-turnstile" data-sitekey={turnstileSiteKey}></div>
-              ) : (
-                <p class="lv-booking-field__warning">
-                  Turnstile is not configured for this environment yet. Set
-                  <code> PUBLIC_TURNSTILE_SITE_KEY </code>
-                  before testing live submissions.
-                </p>
-              )}
+              ) : null}
               {errors.turnstileToken && (
                 <p class="lv-booking-field__error">{errors.turnstileToken}</p>
               )}

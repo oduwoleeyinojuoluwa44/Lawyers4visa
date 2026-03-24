@@ -10,6 +10,11 @@ type Props = {
   description: string;
   bodyClass?: string;
   currentPath?: string;
+  canonicalPath?: string;
+  ogImage?: string;
+  ogType?: "website" | "article";
+  noindex?: boolean;
+  structuredData?: Record<string, unknown> | Record<string, unknown>[];
   hideHeader?: boolean;
   hideFooter?: boolean;
 };
@@ -19,9 +24,21 @@ const {
   description,
   bodyClass = "site-page",
   currentPath = Astro.url.pathname,
+  canonicalPath = Astro.url.pathname,
+  ogImage = siteMetadata.ogImage,
+  ogType = "website",
+  noindex = false,
+  structuredData,
   hideHeader = false,
   hideFooter = false
 } = Astro.props;
+
+const canonicalUrl = new URL(canonicalPath, siteMetadata.siteUrl).toString();
+const ogImageUrl = new URL(ogImage, siteMetadata.siteUrl).toString();
+const structuredDataNodes = [
+  siteMetadata.organizationSchema,
+  ...(structuredData ? (Array.isArray(structuredData) ? structuredData : [structuredData]) : [])
+];
 ---
 
 <!doctype html>
@@ -31,8 +48,24 @@ const {
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{title}</title>
     <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalUrl} />
+    <meta name="robots" content={noindex ? "noindex, nofollow" : "index, follow"} />
     <meta name="theme-color" content="#ffffff" />
     <meta property="og:site_name" content={siteMetadata.title} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content={ogType} />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:image" content={ogImageUrl} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImageUrl} />
+    {
+      structuredDataNodes.map((node) => (
+        <script is:inline type="application/ld+json" set:html={JSON.stringify(node)} />
+      ))
+    }
     <slot name="head" />
   </head>
   <body class={bodyClass} id="top">

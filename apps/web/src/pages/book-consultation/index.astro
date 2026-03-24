@@ -8,10 +8,11 @@ const selectedType = parseConsultationType(Astro.url.searchParams.get("type"));
 ---
 
 <SiteLayout
-  title={`Book Consultation | ${siteMetadata.title}`}
-  description="Select the appropriate consultation type and begin the three-step request flow."
+  title={`Book a UK Immigration Consultation | ${siteMetadata.title}`}
+  description="Book a UK immigration consultation for sponsor licence advice, visa applications, or immigration appeals and begin the consultation request process."
   bodyClass="booking-page booking-page--selection"
   currentPath="/book-consultation/"
+  canonicalPath="/book-consultation/"
 >
   <main class="lv-main lv-booking-main">
     <section class="lv-booking-step">

@@ -25,6 +25,7 @@ type Props = {
 const { article } = Astro.props as Props;
 const relatedArticles = getImmigrationInsightRelatedArticles(article.slug);
 const adjacentArticles = getImmigrationInsightAdjacentArticles(article.slug);
+const articleUrlPath = `/immigration-insights/${article.slug}/`;
 const articleCharacterCount =
   article.excerpt.length +
   article.sections.reduce(
@@ -39,6 +40,24 @@ const articleCharacterCount =
     0
   );
 const isCompactArticleLayout = articleCharacterCount < 3400;
+const articleSchema = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  headline: article.title,
+  description: article.excerpt,
+  datePublished: article.publishedAt,
+  dateModified: article.publishedAt,
+  image: [new URL(article.heroImage, siteMetadata.siteUrl).toString()],
+  mainEntityOfPage: new URL(articleUrlPath, siteMetadata.siteUrl).toString(),
+  author: {
+    "@type": "Organization",
+    name: siteMetadata.companyName
+  },
+  publisher: {
+    "@type": "Organization",
+    name: siteMetadata.companyName
+  }
+};
 
 const shareIcons = {
   x: `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17.53 3h3.21l-7.01 8.01L22 21h-6.39l-5-6.54L4.9 21H1.68l7.5-8.58L1.33 3h6.55l4.52 5.96L17.53 3Zm-1.12 16.08h1.78L6.91 4.82H5.01L16.41 19.08Z" fill="currentColor"/></svg>`,
@@ -54,6 +73,10 @@ const shareIcons = {
   description={article.excerpt}
   bodyClass="immigration-insight-article-page"
   currentPath="/immigration-insights/"
+  canonicalPath={articleUrlPath}
+  ogImage={article.heroImage}
+  ogType="article"
+  structuredData={articleSchema}
 >
   <main class="lv-main lv-insight-article-main">
     <section class="lv-insight-article-hero">

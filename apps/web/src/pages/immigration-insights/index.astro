@@ -15,10 +15,12 @@ const filterLabels = ["All", ...immigrationInsightCategories];
 ---
 
 <SiteLayout
-  title={`Immigration Insights | ${siteMetadata.title}`}
+  title={`UK Immigration News and Legal Insights | ${siteMetadata.title}`}
   description={immigrationInsightsPage.description}
   bodyClass="immigration-insights-page"
   currentPath="/immigration-insights/"
+  canonicalPath="/immigration-insights/"
+  ogImage={immigrationInsightsPage.heroImages.primary}
 >
   <main class="lv-main lv-insights-main" data-insights-root>
     <section class="lv-insights-hero">

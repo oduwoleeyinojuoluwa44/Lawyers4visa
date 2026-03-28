@@ -4,7 +4,6 @@ import {
   type ConsultationRequestRecord,
   type ConsultationType
 } from "@lawyers4visa/content";
-import "postal-mime";
 
 import {
   renderConsultationAdminEmail,
@@ -31,6 +30,13 @@ export type BookingFormErrors = Partial<
   Record<keyof BookingFormValues | "form", string>
 >;
 
+const bookingFieldLimits = {
+  caseSummary: 2000,
+  fullName: 120,
+  organization: 120,
+  phone: 24
+};
+
 export const emptyBookingFormValues = (
   consultationType: ConsultationType | null = null
 ): BookingFormValues => ({
@@ -44,7 +50,17 @@ export const emptyBookingFormValues = (
 });
 
 const normalizeValue = (value: FormDataEntryValue | null) =>
-  typeof value === "string" ? value.trim() : "";
+  typeof value === "string"
+    ? value.replaceAll(/\s+/g, " ").replaceAll(/[\u0000-\u001f\u007f]/g, "").trim()
+    : "";
+
+const normalizeMultilineValue = (value: FormDataEntryValue | null) =>
+  typeof value === "string"
+    ? value
+        .replaceAll(/\r\n/g, "\n")
+        .replaceAll(/[\u0000-\u0008\u000b\u000c\u000e-\u001f\u007f]/g, "")
+        .trim()
+    : "";
 
 export const getRequestIpAddress = (headers: Headers) => {
   const forwardedFor = headers.get("x-forwarded-for");
@@ -66,7 +82,7 @@ export const getBookingFormValues = (
   email: normalizeValue(formData.get("email")),
   phone: normalizeValue(formData.get("phone")),
   organization: normalizeValue(formData.get("organization")),
-  caseSummary: normalizeValue(formData.get("caseSummary")),
+  caseSummary: normalizeMultilineValue(formData.get("caseSummary")),
   turnstileToken: normalizeValue(formData.get("cf-turnstile-response"))
 });
 
@@ -85,6 +101,8 @@ export const validateBookingForm = (
 
   if (!values.fullName) {
     errors.fullName = "Please enter your full name.";
+  } else if (values.fullName.length < 2 || values.fullName.length > bookingFieldLimits.fullName) {
+    errors.fullName = "Please enter a valid full name.";
   }
 
   if (!values.email) {
@@ -95,6 +113,19 @@ export const validateBookingForm = (
 
   if (!values.phone) {
     errors.phone = "Please enter your phone number.";
+  } else if (
+    values.phone.length > bookingFieldLimits.phone ||
+    !/^[0-9+()\-\s]{7,24}$/.test(values.phone)
+  ) {
+    errors.phone = "Please enter a valid phone number.";
+  }
+
+  if (values.organization.length > bookingFieldLimits.organization) {
+    errors.organization = "Organization name is too long.";
+  }
+
+  if (values.caseSummary.length > bookingFieldLimits.caseSummary) {
+    errors.caseSummary = "Case summary is too long.";
   }
 
   if (!values.turnstileToken) {
@@ -129,30 +160,64 @@ export const createReferenceNumber = () => {
   return `L4V-${token}`;
 };
 
-const getResendClient = async () => {
-  const apiKey = import.meta.env.RESEND_API_KEY;
+type ResendEmailPayload = {
+  from: string;
+  html: string;
+  reply_to?: string;
+  subject: string;
+  text: string;
+  to: string[];
+};
 
-  if (!apiKey) {
-    return null;
+const resendEmailsEndpoint = "https://api.resend.com/emails";
+
+const getResendApiKey = () => {
+  const apiKey = import.meta.env.RESEND_API_KEY?.trim();
+
+  return apiKey ? apiKey : null;
+};
+
+const sendResendEmail = async (apiKey: string, payload: ResendEmailPayload) => {
+  const response = await fetch(resendEmailsEndpoint, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${apiKey}`,
+      "Content-Type": "application/json",
+      "User-Agent": "lawyers4visa-booking"
+    },
+    body: JSON.stringify(payload)
+  });
+
+  if (response.ok) {
+    return;
   }
 
-  const { Resend } = await import("resend");
-  return new Resend(apiKey);
+  let details = response.statusText;
+
+  try {
+    const rawBody = await response.text();
+    details = rawBody || details;
+  } catch {
+    // Ignore response body parsing failures and use the status text instead.
+  }
+
+  throw new Error(`Resend API request failed (${response.status}): ${details}`);
 };
 
 const getEmailConfig = () => {
-  const sender = import.meta.env.RESEND_FROM_EMAIL || "LawyerForVisa <onboarding@resend.dev>";
+  const sender =
+    import.meta.env.RESEND_FROM_EMAIL || "Lawyers4Visa <bookings@mail.lawyersforvisas.com>";
   const notificationEmail =
     import.meta.env.CONSULTATION_NOTIFICATION_EMAIL || "hello@lawyersforvisas.com";
-  const siteUrl = import.meta.env.PUBLIC_SITE_URL || "http://localhost:4321";
+  const siteUrl = import.meta.env.PUBLIC_SITE_URL || "https://www.lawyersforvisas.com";
 
   return { notificationEmail, sender, siteUrl };
 };
 
 const sendConsultationEmails = async (record: ConsultationRequestRecord) => {
-  const resend = await getResendClient();
+  const resendApiKey = getResendApiKey();
 
-  if (!resend) {
+  if (!resendApiKey) {
     return;
   }
 
@@ -189,18 +254,18 @@ const sendConsultationEmails = async (record: ConsultationRequestRecord) => {
   ].join("\n");
 
   const emailJobs = [
-    resend.emails.send({
+    sendResendEmail(resendApiKey, {
       from: sender,
-      to: record.email,
-      replyTo: notificationEmail,
+      to: [record.email],
+      reply_to: notificationEmail,
       subject: `Consultation request received - ${record.referenceNumber}`,
       text: userText,
       html: renderConsultationUserEmail(record, confirmationUrl)
     }),
-    resend.emails.send({
+    sendResendEmail(resendApiKey, {
       from: sender,
-      to: notificationEmail,
-      replyTo: record.email,
+      to: [notificationEmail],
+      reply_to: record.email,
       subject: `Manual scheduling required - ${record.referenceNumber}`,
       text: adminText,
       html: renderConsultationAdminEmail(record, confirmationUrl)

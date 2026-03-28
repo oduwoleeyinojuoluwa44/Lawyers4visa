@@ -278,6 +278,6 @@ export const renderConsultationAdminEmail = (
     actionHref: replyToClientUrl,
     actionLabel: "Email Client",
     footerNote:
-      "This notification was generated automatically from the LawyerForVisa consultation request flow."
+      "This notification was generated automatically from the Lawyers4Visa consultation request flow."
   });
 };

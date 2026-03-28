@@ -2,7 +2,6 @@ import {
   type ConsultationRequestRecord,
   type ConsultationType
 } from "@lawyers4visa/content";
-import "get-it";
 
 const apiVersion = "2026-03-16";
 
@@ -11,7 +10,15 @@ type ConsultationRequestDocument = ConsultationRequestRecord & {
   _type: "consultationRequest";
 };
 
-type ConsultationRequestQueryResult = ConsultationRequestRecord;
+type SanityMutationResponse = {
+  results?: Array<{
+    document?: ConsultationRequestDocument;
+  }>;
+};
+
+type SanityQueryResponse<T> = {
+  result: T;
+};
 
 const getSanityConfig = () => {
   const projectId = import.meta.env.SANITY_STUDIO_PROJECT_ID;
@@ -27,77 +34,113 @@ const getSanityConfig = () => {
   return { projectId, dataset, token };
 };
 
-const getSanityClient = async () => {
-  const { projectId, dataset, token } = getSanityConfig();
-  const { createClient } = await import("@sanity/client");
-
-  return createClient({
-    apiVersion,
-    dataset,
-    projectId,
-    token,
-    useCdn: false
-  });
+const getSanityApiUrl = (path: string) => {
+  const { projectId } = getSanityConfig();
+  return `https://${projectId}.api.sanity.io/v${apiVersion}${path}`;
 };
+
+const sanityRequest = async <T>(
+  path: string,
+  init?: RequestInit
+): Promise<T> => {
+  const { token } = getSanityConfig();
+  const response = await fetch(getSanityApiUrl(path), {
+    ...init,
+    headers: {
+      authorization: `Bearer ${token}`,
+      "content-type": "application/json",
+      ...(init?.headers ?? {})
+    }
+  });
+
+  if (!response.ok) {
+    console.error("Sanity API request failed", {
+      path,
+      status: response.status,
+      statusText: response.statusText
+    });
+    throw new Error("The consultation request could not be saved. Please try again.");
+  }
+
+  return (await response.json()) as T;
+};
+
+const toConsultationRequestRecord = (
+  document: ConsultationRequestRecord | ConsultationRequestDocument
+): ConsultationRequestRecord => ({
+  caseSummary: document.caseSummary ?? "",
+  consultationType: document.consultationType as ConsultationType,
+  email: document.email,
+  fullName: document.fullName,
+  organization: document.organization ?? "",
+  phone: document.phone,
+  referenceNumber: document.referenceNumber,
+  status: document.status,
+  submittedAt: document.submittedAt
+});
 
 export const createConsultationRequest = async (
   record: ConsultationRequestRecord
 ): Promise<ConsultationRequestRecord> => {
-  const client = await getSanityClient();
+  const { dataset } = getSanityConfig();
   const document: ConsultationRequestDocument = {
     _id: `consultationRequest.${record.referenceNumber}`,
     _type: "consultationRequest",
     ...record
   };
 
-  const created = await client.createOrReplace(document);
+  const result = await sanityRequest<SanityMutationResponse>(
+    `/data/mutate/${dataset}?returnIds=true&returnDocuments=true`,
+    {
+      method: "POST",
+      body: JSON.stringify({
+        mutations: [{ createOrReplace: document }]
+      })
+    }
+  );
 
-  return {
-    caseSummary: created.caseSummary ?? "",
-    consultationType: created.consultationType as ConsultationType,
-    email: created.email,
-    fullName: created.fullName,
-    organization: created.organization ?? "",
-    phone: created.phone,
-    referenceNumber: created.referenceNumber,
-    status: created.status,
-    submittedAt: created.submittedAt
-  };
+  const created = result.results?.[0]?.document;
+
+  if (!created) {
+    throw new Error("The consultation request could not be saved. Please try again.");
+  }
+
+  return toConsultationRequestRecord(created);
 };
 
 export const getConsultationRequestByReference = async (
   referenceNumber: string
 ): Promise<ConsultationRequestRecord | null> => {
-  const client = await getSanityClient();
+  const { dataset } = getSanityConfig();
+  const normalizedReference = referenceNumber.trim().toUpperCase();
 
-  const result = await client.fetch<ConsultationRequestQueryResult | null>(
-    `*[_type == "consultationRequest" && referenceNumber == $referenceNumber][0]{
-      referenceNumber,
-      consultationType,
-      fullName,
-      email,
-      phone,
-      organization,
-      caseSummary,
-      status,
-      submittedAt
-    }`,
-    { referenceNumber }
-  );
-
-  if (!result) {
+  if (!/^[A-Z0-9-]{5,32}$/.test(normalizedReference)) {
     return null;
   }
 
-  return {
-    caseSummary: result.caseSummary ?? "",
-    consultationType: result.consultationType as ConsultationType,
-    email: result.email,
-    fullName: result.fullName,
-    organization: result.organization ?? "",
-    phone: result.phone,
-    referenceNumber: result.referenceNumber,
-    status: result.status,
-    submittedAt: result.submittedAt
-  };
+  const query = `*[_type == "consultationRequest" && referenceNumber == ${JSON.stringify(normalizedReference)}][0]{
+    referenceNumber,
+    consultationType,
+    fullName,
+    email,
+    phone,
+    organization,
+    caseSummary,
+    status,
+    submittedAt
+  }`;
+  const params = new URLSearchParams({ query });
+  const result = await sanityRequest<SanityQueryResponse<ConsultationRequestRecord | null>>(
+    `/data/query/${dataset}?${params.toString()}`,
+    {
+      method: "GET",
+      headers: {}
+    }
+  );
+
+  if (!result.result) {
+    return null;
+  }
+
+  return toConsultationRequestRecord(result.result);
 };

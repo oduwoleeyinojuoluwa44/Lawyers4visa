@@ -28,8 +28,7 @@ export const verifyTurnstileToken = async (
   if (!secret) {
     return {
       success: false,
-      message:
-        "Turnstile is not configured for this environment. Configure TURNSTILE_SECRET_KEY before accepting submissions."
+      message: "The anti-spam verification service is unavailable. Please try again later."
     };
   }
 

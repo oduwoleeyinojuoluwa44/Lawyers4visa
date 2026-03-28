@@ -109,6 +109,7 @@ const backHref = selectedType
                 type="text"
                 value={values.fullName}
                 autocomplete="name"
+                maxlength="120"
                 required
               />
               {errors.fullName && <p class="lv-booking-field__error">{errors.fullName}</p>}
@@ -135,6 +136,7 @@ const backHref = selectedType
                 type="tel"
                 value={values.phone}
                 autocomplete="tel"
+                maxlength="24"
                 required
               />
               {errors.phone && <p class="lv-booking-field__error">{errors.phone}</p>}
@@ -148,7 +150,9 @@ const backHref = selectedType
                 type="text"
                 value={values.organization}
                 autocomplete="organization"
+                maxlength="120"
               />
+              {errors.organization && <p class="lv-booking-field__error">{errors.organization}</p>}
             </div>
 
             <div class="lv-booking-field">
@@ -174,7 +178,9 @@ const backHref = selectedType
                 id="caseSummary"
                 name="caseSummary"
                 rows="5"
+                maxlength="2000"
               >{values.caseSummary}</textarea>
+              {errors.caseSummary && <p class="lv-booking-field__error">{errors.caseSummary}</p>}
             </div>
 
             <p class="lv-booking-form__confidentiality">

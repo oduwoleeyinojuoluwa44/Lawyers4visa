@@ -687,18 +687,14 @@ select {
 
 .lv-service-grid {
   display: grid;
-  gap: 4px;
+  gap: 20px;
 }
 
 .lv-service-grid__row {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   width: 100%;
-  border-left: 1px solid #bbb4af;
-}
-
-.lv-service-grid__row:first-child {
-  border-bottom: 1px solid #bbb4af;
+  gap: 20px;
 }
 
 .lv-service-grid__row--last {
@@ -706,26 +702,19 @@ select {
 }
 
 .lv-service-grid__row--last::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  right: 0;
-  width: 1px;
-  height: 100%;
-  background: #bbb4af;
+  display: none;
 }
 
 .lv-service-card {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  min-height: 290px;
-  padding: 26px;
+  gap: 24px;
+  min-height: 0;
+  padding: 32px;
   background: #ffffff;
-}
-
-.lv-service-card + .lv-service-card {
-  border-left: 1px solid #bbb4af;
+  border: 1px solid #d8cec7;
+  border-radius: 24px;
 }
 
 .lv-service-card__icon {
@@ -747,8 +736,8 @@ select {
 
 .lv-service-card__content {
   display: grid;
-  gap: 18px;
-  margin-top: auto;
+  gap: 14px;
+  margin-top: 0;
 }
 
 .lv-service-card h3,
@@ -765,7 +754,7 @@ select {
 .lv-service-card h3 {
   width: min(320px, 100%);
   max-width: none;
-  margin: 0;
+  margin: 0 0 8px;
   color: #391900;
   font-family: "Lora", Georgia, serif;
   font-size: clamp(1.7rem, 2vw, 1.9rem);
@@ -1209,7 +1198,7 @@ select {
 }
 
 .lv-consultation-card h3 {
-  margin: 0;
+  margin: 0 0 12px;
   color: #391900;
   font-family: "Source Serif 4", "Cormorant Garamond", Georgia, serif;
   font-size: 1.35rem;
@@ -3628,7 +3617,7 @@ select {
   }
 
   .lv-service-grid {
-    gap: 0;
+    gap: 16px;
   }
 
   .lv-service-grid__row,
@@ -3638,22 +3627,15 @@ select {
     grid-template-columns: 1fr;
   }
 
-  .lv-service-grid__row:first-child {
-    border-bottom: 0;
-  }
-
-  .lv-service-grid__row + .lv-service-grid__row .lv-service-card:first-child {
-    border-top: 1px solid #bbb4af;
-  }
-
   .lv-service-grid__row--last::after {
     display: none;
   }
 
   .lv-service-card {
     min-height: auto;
-    padding: 22px 18px;
+    padding: 24px 20px;
     gap: 24px;
+    border-radius: 20px;
   }
 
   .lv-service-card h3 {
@@ -3662,11 +3644,6 @@ select {
 
   .lv-service-card__content {
     margin-top: 0;
-  }
-
-  .lv-service-card + .lv-service-card {
-    border-left: 0;
-    border-top: 1px solid #bbb4af;
   }
 
   .lv-service-card__icon {

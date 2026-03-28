@@ -14,11 +14,7 @@
     "@lawyers4visa/content": "workspace:*",
     "@lawyers4visa/theme": "workspace:*",
     "@astrojs/vercel": "^10.0.0",
-    "@sanity/client": "^7.11.2",
-    "get-it": "^8.4.17",
-    "postal-mime": "^2.5.0",
-    "astro": "latest",
-    "resend": "^6.2.0"
+    "astro": "latest"
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.7",

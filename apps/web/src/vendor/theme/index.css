@@ -178,18 +178,20 @@ select {
 }
 
 .lv-button--header-cta > span:first-child {
+  box-sizing: border-box;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-width: 164px;
-  height: 40px;
-  padding: 0 22px;
+  width: 176px;
+  height: 42px;
+  padding: 0 24px;
   background: #5f2900;
   color: #ffffff;
   font-family: "Lora", Georgia, serif;
-  font-size: 0.82rem;
+  font-size: 0.875rem;
   font-weight: 500;
   letter-spacing: -0.02em;
+  line-height: 22px;
 }
 
 .lv-button__icon {
@@ -244,17 +246,18 @@ select {
 
 .lv-header-cta-menu__panel {
   position: absolute;
-  top: calc(100% + 10px);
+  top: calc(100% + 16px);
   left: 0;
-  min-width: 218px;
-  padding: 8px;
+  width: 218px;
+  padding: 0;
   z-index: 20;
 }
 
 .lv-header-cta-menu__item {
-  display: inline-flex;
+  display: flex;
   align-items: center;
   min-height: 42px;
+  padding: 8px;
   font-family: "Poppins", "Inter", system-ui, sans-serif;
   font-size: 1rem;
   line-height: 1.7;

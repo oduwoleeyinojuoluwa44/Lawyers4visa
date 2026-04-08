@@ -28,7 +28,7 @@ export const homePage = {
     label: "Credentials",
     title: "Unparalleled Experience in UK Immigration Law",
     summary:
-      "lawyersForvisa's Lagos-based immigration practice at 56 Afolabi Aina Street off Allen Avenue, Ikeja encompasses family visa applications, student visa applications, work visa applications, asylum cases, human rights law matters, and overstayer cases.",
+      "lawyersForvisas's Lagos-based immigration practice at 56 Afolabi Aina Street off Allen Avenue, Ikeja encompasses family visa applications, student visa applications, work visa applications, asylum cases, human rights law matters, and overstayer cases.",
     body: [
       "The principal partner has appeared at every tier of the Immigration and Asylum Chamber and is one of the few lawyers in private practice to have previously represented the Secretary of State in immigration proceedings.",
       "That background matters for clients whose applications, refusals, compliance obligations, or appeals require legal judgment rather than checklist processing."

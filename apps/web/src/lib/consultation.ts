@@ -2,7 +2,7 @@ import {
   consultationOptions,
   consultationOptionsByType,
   type ConsultationType
-} from "@lawyersForvisa/content";
+} from "@lawyersForvisas/content";
 
 export const consultationTypeValues = consultationOptions.map((option) => option.type);
 

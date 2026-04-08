@@ -5,7 +5,7 @@ import { schemaTypes } from "./schemas";
 
 export default defineConfig({
   name: "default",
-  title: "lawyersForvisa Studio",
+  title: "lawyersForvisas Studio",
   projectId: process.env.SANITY_STUDIO_PROJECT_ID ?? "replace-me",
   dataset: process.env.SANITY_STUDIO_DATASET ?? "production",
   plugins: [structureTool()],

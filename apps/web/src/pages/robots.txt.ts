@@ -1,4 +1,4 @@
-import { siteMetadata } from "@lawyersForvisa/content";
+import { siteMetadata } from "@lawyersForvisas/content";
 
 export const prerender = true;
 

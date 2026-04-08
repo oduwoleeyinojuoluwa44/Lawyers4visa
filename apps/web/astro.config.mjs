@@ -7,8 +7,8 @@ export default defineConfig({
   vite: {
     resolve: {
       alias: {
-        "@lawyersForvisa/content": "/src/vendor/content/index.ts",
-        "@lawyersForvisa/theme/index.css": "/src/vendor/theme/index.css"
+        "@lawyersForvisas/content": "/src/vendor/content/index.ts",
+        "@lawyersForvisas/theme/index.css": "/src/vendor/theme/index.css"
       }
     }
   }

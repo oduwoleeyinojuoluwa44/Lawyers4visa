@@ -1,5 +1,5 @@
 {
-  "name": "@lawyersForvisa/studio",
+  "name": "@lawyersForvisas/studio",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -10,7 +10,7 @@
     "typecheck": "tsc --project tsconfig.json --noEmit"
   },
   "dependencies": {
-    "@lawyersForvisa/content": "workspace:*",
+    "@lawyersForvisas/content": "workspace:*",
     "react": "latest",
     "react-dom": "latest",
     "sanity": "latest",

@@ -2,7 +2,7 @@ import {
   consultationOptionsByType,
   siteMetadata,
   type ConsultationRequestRecord
-} from "@lawyersForvisa/content";
+} from "@lawyersForvisas/content";
 
 type EmailShellOptions = {
   preheader: string;
@@ -278,6 +278,6 @@ export const renderConsultationAdminEmail = (
     actionHref: replyToClientUrl,
     actionLabel: "Email Client",
     footerNote:
-      "This notification was generated automatically from the lawyersForvisa consultation request flow."
+      "This notification was generated automatically from the lawyersForvisas consultation request flow."
   });
 };

@@ -1,5 +1,5 @@
 {
-  "name": "lawyersForvisa",
+  "name": "lawyersForvisas",
   "private": true,
   "version": "0.0.0",
   "packageManager": "pnpm@10.32.1",
@@ -12,8 +12,8 @@
   ],
   "scripts": {
     "dev": "turbo dev",
-    "dev:web": "turbo -F @lawyersForvisa/web dev",
-    "dev:studio": "turbo -F @lawyersForvisa/studio dev",
+    "dev:web": "turbo -F @lawyersForvisas/web dev",
+    "dev:studio": "turbo -F @lawyersForvisas/studio dev",
     "build": "turbo build",
     "lint": "turbo lint",
     "typecheck": "turbo typecheck",

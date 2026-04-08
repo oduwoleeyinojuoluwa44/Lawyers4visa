@@ -1,6 +1,6 @@
 export const siteMetadata = {
   eyebrow: "Lagos-based immigration law specialists at 56 Afolabi Aina Street off Allen Avenue, Ikeja",
-  title: "lawyersForvisa",
+  title: "lawyersForvisas",
   siteUrl: "https://www.lawyersforvisas.com",
   ogImage: "/images/services/services-hero.jpg",
   companyName: "Yemi Oguntolu and Co",
@@ -9,7 +9,7 @@ export const siteMetadata = {
   organizationSchema: {
     "@context": "https://schema.org",
     "@type": "LegalService",
-    name: "lawyersForvisa",
+    name: "lawyersForvisas",
     alternateName: "Yemi Oguntolu and Co",
     url: "https://www.lawyersforvisas.com",
     areaServed: ["United Kingdom", "Nigeria"],

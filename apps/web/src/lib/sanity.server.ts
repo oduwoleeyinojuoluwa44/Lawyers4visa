@@ -1,7 +1,7 @@
 import {
   type ConsultationRequestRecord,
   type ConsultationType
-} from "@lawyersForvisa/content";
+} from "@lawyersForvisas/content";
 
 const apiVersion = "2026-03-16";
 

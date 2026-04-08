@@ -207,23 +207,38 @@ select {
 }
 
 .lv-header-cta-menu {
+  display: inline-flex;
+  align-items: center;
+  gap: 16px;
   position: relative;
 }
 
-.lv-header-cta-menu > summary {
+.lv-header-cta-menu__dropdown {
+  position: static;
+}
+
+.lv-header-cta-menu__dropdown > summary {
   list-style: none;
   cursor: pointer;
 }
 
-.lv-header-cta-menu > summary::-webkit-details-marker {
+.lv-header-cta-menu__dropdown > summary::-webkit-details-marker {
   display: none;
 }
 
-.lv-header-cta-menu > summary .lv-button__icon {
+.lv-header-cta-menu__toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+}
+
+.lv-header-cta-menu__toggle .lv-button__icon {
   transition: transform 180ms ease;
 }
 
-.lv-header-cta-menu[open] > summary .lv-button__icon {
+.lv-header-cta-menu__dropdown[open] .lv-header-cta-menu__toggle .lv-button__icon {
   transform: rotate(180deg);
 }
 

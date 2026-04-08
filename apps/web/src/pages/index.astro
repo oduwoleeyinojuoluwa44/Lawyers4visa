@@ -217,17 +217,21 @@ const iconSprites = {
           }
         </nav>
 
-        <details class="lv-header-cta-menu lv-button--header">
-          <summary class="lv-button lv-button--header-cta" aria-label="Book consultation options">
+        <div class="lv-header-cta-menu lv-button--header">
+          <a class="lv-button lv-button--header-cta lv-header-cta-menu__primary" href="/book-consultation/">
             <span>Book Consultation</span>
-            <span class="lv-button__icon" set:html={chevronDownIcon} />
-          </summary>
-          <div class="lv-header-cta-menu__panel" role="menu">
-            <a class="lv-header-cta-menu__item" href="/services/" role="menuitem">
-              Legal and compliance
-            </a>
-          </div>
-        </details>
+          </a>
+          <details class="lv-header-cta-menu__dropdown">
+            <summary class="lv-header-cta-menu__toggle" aria-label="Book consultation options">
+              <span class="lv-button__icon" set:html={chevronDownIcon} />
+            </summary>
+            <div class="lv-header-cta-menu__panel" role="menu">
+              <a class="lv-header-cta-menu__item" href="/services/" role="menuitem">
+                Legal and compliance
+              </a>
+            </div>
+          </details>
+        </div>
 
         <details class="lv-mobile-menu">
           <summary aria-label="Open navigation menu">
@@ -258,7 +262,7 @@ const iconSprites = {
           <div class="lv-hero__panel">
             <h1>UK Immigration Law Specialists Advisory</h1>
             <p>
-              A UK-based immigration law firm advising corporate organisations and private clients on
+              A Lagos-based immigration law firm advising corporate organisations and private clients on
               complex visa applications and appeals.
             </p>
 
@@ -458,7 +462,7 @@ const iconSprites = {
             <h2>
               Why
               <br />
-              <span>UK-Based Advice Matters?</span>
+              <span>Lagos-Based Advice Matters?</span>
             </h2>
           </div>
 
@@ -511,7 +515,7 @@ const iconSprites = {
               <div class="lv-office__copy">
                 <p>
                   All legal advice, application preparation, and Home Office liaison is conducted from our
-                  UK base. The Nigeria office serves as a client liaison point only and does not provide
+                  Lagos base. The Nigeria office serves as a client liaison point only and does not provide
                   independent legal advice or representation.
                 </p>
                 <p>
@@ -520,7 +524,7 @@ const iconSprites = {
                   Africa.
                 </p>
                 <p>
-                  Clients consulting through our Nigeria office receive the same UK-based legal service as
+                  Clients consulting through our Nigeria office receive the same Lagos-based legal service as
                   clients consulting directly in the UK.
                 </p>
               </div>
@@ -579,7 +583,7 @@ const iconSprites = {
           <h2>Discuss Your UK Immigration Matter With A Specialist</h2>
           <p>
             Whether you require advice on visa applications, sponsor licence compliance, refusal
-            response, or tribunal representation, we provide UK-based legal expertise grounded in
+            response, or tribunal representation, we provide Lagos-based legal expertise grounded in
             immigration law and Home Office practice.
           </p>
           <a class="lv-button lv-button--cta" href="/book-consultation/">Book Consultation</a>

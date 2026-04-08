@@ -1,16 +1,16 @@
 ---
-import "@lawyers4visa/theme/index.css";
-import { siteMetadata } from "@lawyers4visa/content";
+import "@lawyersForvisa/theme/index.css";
+import { siteMetadata } from "@lawyersForvisa/content";
 import InteractiveGlobe from "../components/InteractiveGlobe.astro";
 
-import heroImage from "../../../../design/png/assets/Modern_uk_law_2k_202602091734 2.png?url";
-import londonImage from "../../../../design/png/assets/vertical-view-victoria-tower-located-palace-westminster-london-downtown-united-kingdom-blue-sky-with-flying-plane-background 1.png?url";
-import libraryOfficeImage from "../../../../design/png/assets/Modern_uk_law_2k_202602091734 1.png?url";
-import meetingImage from "../../../../design/png/assets/Change_the_man_2k_202602101246 1.png?url";
-import legalCloseupImage from "../../../../design/png/assets/Closeup_of_legal_2k_202602110034 1.png?url";
-import ukDeskImage from "../../../../design/png/assets/Image_fx (37) 1.png?url";
-import boardroomImage from "../../../../design/png/assets/Professional_corporate_boardroom_2k_202602101 1.png?url";
-import visaImage from "../../../../design/png/assets/visa-application-composition-with-australian-flag 1.png?url";
+const heroImage = "/images/home/hero-main.png";
+const londonImage = "/images/home/london-tower.png";
+const libraryOfficeImage = "/images/home/library-office.png";
+const meetingImage = "/images/home/meeting.png";
+const legalCloseupImage = "/images/home/legal-closeup.png";
+const ukDeskImage = "/images/home/uk-desk.png";
+const boardroomImage = "/images/home/boardroom.png";
+const visaImage = "/images/home/visa-application.png";
 
 export const prerender = true;
 
@@ -207,7 +207,7 @@ const iconSprites = {
   <body class="homepage" id="top">
     <header class="lv-header">
       <div class="lv-shell lv-header__shell">
-        <a class="lv-brand" href="#top" aria-label="Lawyers4Visa home">Lawyers4Visa</a>
+        <a class="lv-brand" href="#top" aria-label="lawyersForvisa home">lawyersForvisa</a>
 
         <nav class="lv-nav" aria-label="Primary navigation">
           {
@@ -217,10 +217,17 @@ const iconSprites = {
           }
         </nav>
 
-        <a class="lv-button lv-button--header lv-button--header-cta" href="/book-consultation/">
-          <span>Book Consultation</span>
-          <span class="lv-button__icon" set:html={chevronDownIcon} />
-        </a>
+        <details class="lv-header-cta-menu lv-button--header">
+          <summary class="lv-button lv-button--header-cta" aria-label="Book consultation options">
+            <span>Book Consultation</span>
+            <span class="lv-button__icon" set:html={chevronDownIcon} />
+          </summary>
+          <div class="lv-header-cta-menu__panel" role="menu">
+            <a class="lv-header-cta-menu__item" href="/services/" role="menuitem">
+              Legal and compliance
+            </a>
+          </div>
+        </details>
 
         <details class="lv-mobile-menu">
           <summary aria-label="Open navigation menu">
@@ -230,7 +237,7 @@ const iconSprites = {
           </summary>
 
           <nav class="lv-mobile-menu__panel" aria-label="Mobile navigation">
-            <a class="lv-mobile-menu__brand" href="#top">Lawyers4Visa</a>
+            <a class="lv-mobile-menu__brand" href="#top">lawyersForvisa</a>
             {
               mobileLinks.map((link) => (
                 <a href={link.href}>{link.label}</a>

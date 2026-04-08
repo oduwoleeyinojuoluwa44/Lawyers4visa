@@ -3,7 +3,7 @@ import {
   consultationNavigationCta,
   mobileNavigation,
   primaryNavigation
-} from '@lawyers4visa/content';
+} from '@lawyersForvisa/content';
 
 type Props = {
   currentPath?: string;
@@ -24,7 +24,7 @@ const isActive = (href: string) => {
 
 <header class='lv-header'>
   <div class='lv-shell lv-header__shell'>
-    <a class='lv-brand' href='/' aria-label='Lawyers4Visa home'>Lawyers4Visa</a>
+    <a class='lv-brand' href='/' aria-label='lawyersForvisa home'>lawyersForvisa</a>
 
     <nav class='lv-nav' aria-label='Primary navigation'>
       {
@@ -47,7 +47,7 @@ const isActive = (href: string) => {
       </summary>
 
       <nav class='lv-mobile-menu__panel' aria-label='Mobile navigation'>
-        <a class='lv-mobile-menu__brand' href='/'>Lawyers4Visa</a>
+        <a class='lv-mobile-menu__brand' href='/'>lawyersForvisa</a>
         {
           mobileNavigation.map((link) => (
             <a href={link.href} class:list={{ 'is-active': isActive(link.href) }}>{link.label}</a>

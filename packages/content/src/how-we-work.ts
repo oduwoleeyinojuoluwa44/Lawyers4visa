@@ -31,7 +31,7 @@ export const howWeWorkPage = {
   ] satisfies HowWeWorkStep[],
   cta: {
     title: 'Discuss Your UK Immigration Matter with a Specialist',
-    description: 'Whether you require advice on a visa application, sponsor licence compliance, refusal response, or tribunal representation, we provide UK-based legal expertise grounded in immigration law and Home Office practice.',
+    description: 'Whether you require advice on a visa application, sponsor licence compliance, refusal response, or tribunal representation, we provide Lagos-based legal expertise from 56 Afolabi Aina Street off Allen Avenue, Ikeja, grounded in immigration law and Home Office practice.',
     href: '/book-consultation/'
   },
 };

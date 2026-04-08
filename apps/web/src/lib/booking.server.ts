@@ -3,7 +3,7 @@ import {
   type ConsultationRequestInput,
   type ConsultationRequestRecord,
   type ConsultationType
-} from "@lawyers4visa/content";
+} from "@lawyersForvisa/content";
 
 import {
   renderConsultationAdminEmail,
@@ -183,7 +183,7 @@ const sendResendEmail = async (apiKey: string, payload: ResendEmailPayload) => {
     headers: {
       Authorization: `Bearer ${apiKey}`,
       "Content-Type": "application/json",
-      "User-Agent": "lawyers4visa-booking"
+      "User-Agent": "lawyersForvisa-booking"
     },
     body: JSON.stringify(payload)
   });
@@ -206,7 +206,7 @@ const sendResendEmail = async (apiKey: string, payload: ResendEmailPayload) => {
 
 const getEmailConfig = () => {
   const sender =
-    import.meta.env.RESEND_FROM_EMAIL || "Lawyers4Visa <bookings@mail.lawyersforvisas.com>";
+    import.meta.env.RESEND_FROM_EMAIL || "lawyersForvisa <bookings@mail.lawyersforvisas.com>";
   const notificationEmail =
     import.meta.env.CONSULTATION_NOTIFICATION_EMAIL || "hello@lawyersforvisas.com";
   const siteUrl = import.meta.env.PUBLIC_SITE_URL || "https://www.lawyersforvisas.com";

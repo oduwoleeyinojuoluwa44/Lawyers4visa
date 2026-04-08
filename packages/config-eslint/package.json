@@ -1,5 +1,5 @@
 {
-  "name": "@lawyers4visa/config-eslint",
+  "name": "@lawyersForvisa/config-eslint",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -7,4 +7,3 @@
     ".": "./base.mjs"
   }
 }
-

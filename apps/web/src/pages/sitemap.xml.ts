@@ -1,4 +1,4 @@
-import { immigrationInsightArticles, siteMetadata } from "@lawyers4visa/content";
+import { immigrationInsightArticles, siteMetadata } from "@lawyersForvisa/content";
 
 export const prerender = true;
 

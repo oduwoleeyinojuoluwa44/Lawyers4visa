@@ -37,7 +37,7 @@ export const servicesPage = {
     {
       title: "Corporate Immigration Services",
       description: [
-        "Strategic UK immigration advice for employers, sponsor licence holders, and businesses expanding operations into the United Kingdom.",
+        "Strategic UK immigration advice for employers, sponsor licence holders, and businesses expanding operations into the United Kingdom delivered from our Lagos office at 56 Afolabi Aina Street off Allen Avenue, Ikeja.",
         "The firm advises corporate clients on immigration planning, regulatory compliance, and workforce mobility matters requiring structured legal oversight."
       ],
       bullets: [
@@ -45,7 +45,7 @@ export const servicesPage = {
         "Skilled Worker and Expansion Worker routes",
         "Employer immigration compliance obligations",
         "Business immigration strategy and planning",
-        "Ongoing advisory support for UK-based operations"
+        "Ongoing advisory support for Lagos-based operations with UK oversight"
       ],
       imageSrc: "/images/services/corporate-immigration.jpg",
       imageAlt: "Corporate hands reviewing legal paperwork and a tablet during a strategy meeting.",
@@ -89,7 +89,7 @@ export const servicesPage = {
   cta: {
     title: "Discuss Your UK Immigration Matter with a Specialist",
     description:
-      "Whether you require advice on a visa application, sponsor licence compliance, refusal response, or tribunal representation, we provide UK-based legal expertise grounded in immigration law and Home Office practice.",
+      "Whether you require advice on a visa application, sponsor licence compliance, refusal response, or tribunal representation, we provide Lagos-based legal expertise from 56 Afolabi Aina Street off Allen Avenue, Ikeja, grounded in immigration law and Home Office practice.",
     href: "/book-consultation/"
   }
 };

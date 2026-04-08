@@ -1,6 +1,6 @@
 ---
-import "@lawyers4visa/theme/index.css";
-import { siteMetadata } from "@lawyers4visa/content";
+import "@lawyersForvisa/theme/index.css";
+import { siteMetadata } from "@lawyersForvisa/content";
 
 const aboutHeroImage = "/images/about/about-hero.jpg";
 const aboutValuesTopImage = "/images/about/about-values-top.jpg";
@@ -27,6 +27,7 @@ const mobileLinks = [
 
 const overviewParagraphs = [
   "Lawyersforvisa's immigration practice encompasses family visa applications, student visa applications, work visa applications, asylum cases, human rights law matters, and overstayer cases. The firm provides experienced representation from initial application through to appeal, ensuring clients receive comprehensive support throughout their immigration journey.",
+  "We operate from 56 Afolabi Aina Street off Allen Avenue in Ikeja, Lagos.",
   "The Principal Partner has appeared in all tiers of the Immigration and Asylum Chamber and has previously represented the Secretary of State in immigration cases, providing the firm with unparalleled credibility and depth of knowledge in this field."
 ];
 
@@ -107,7 +108,7 @@ const chevronDownIcon = `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m7
   <body class="about-page" id="top">
     <header class="lv-header">
       <div class="lv-shell lv-header__shell">
-        <a class="lv-brand" href="/" aria-label="Lawyers4Visa home">Lawyers4Visa</a>
+        <a class="lv-brand" href="/" aria-label="lawyersForvisa home">lawyersForvisa</a>
 
         <nav class="lv-nav" aria-label="Primary navigation">
           {
@@ -130,7 +131,7 @@ const chevronDownIcon = `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m7
           </summary>
 
           <nav class="lv-mobile-menu__panel" aria-label="Mobile navigation">
-            <a class="lv-mobile-menu__brand" href="/">Lawyers4Visa</a>
+            <a class="lv-mobile-menu__brand" href="/">lawyersForvisa</a>
             {
               mobileLinks.map((link) => (
                 <a href={link.href} class:list={{ "is-active": link.current }}>{link.label}</a>

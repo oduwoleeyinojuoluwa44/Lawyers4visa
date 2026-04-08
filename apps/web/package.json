@@ -1,5 +1,5 @@
 {
-  "name": "@lawyers4visa/web",
+  "name": "@lawyersForvisa/web",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -11,8 +11,6 @@
     "typecheck": "astro check"
   },
   "dependencies": {
-    "@lawyers4visa/content": "workspace:*",
-    "@lawyers4visa/theme": "workspace:*",
     "@astrojs/vercel": "^10.0.0",
     "astro": "latest"
   },

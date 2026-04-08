@@ -1,8 +1,8 @@
 {
-  "extends": "../../packages/config-typescript/astro.json",
-  "include": [
-    "src",
-    "astro.config.mjs"
-  ]
+  "extends": "astro/tsconfigs/strict",
+  "compilerOptions": {
+    "types": ["astro/client", "node"],
+    "jsx": "preserve"
+  },
+  "include": ["src", "astro.config.mjs"]
 }
-

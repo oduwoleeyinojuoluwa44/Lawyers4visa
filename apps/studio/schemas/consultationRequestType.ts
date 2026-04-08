@@ -1,4 +1,4 @@
-import { consultationOptions } from "@lawyers4visa/content";
+import { consultationOptions } from "@lawyersForvisa/content";
 import { defineField, defineType } from "sanity";
 
 export const consultationRequestType = defineType({

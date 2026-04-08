@@ -1,5 +1,5 @@
 {
-  "name": "@lawyers4visa/config-typescript",
+  "name": "@lawyersForvisa/config-typescript",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -9,4 +9,3 @@
     "./sanity": "./sanity.json"
   }
 }
-

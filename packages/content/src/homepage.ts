@@ -3,7 +3,7 @@ export const homePage = {
     badge: "UK Immigration Law Specialists Advisory",
     title: "UK Immigration Law Specialists Advisory",
     description:
-      "A UK-based immigration law firm advising corporate organisations and private clients on complex visa applications, appeals, compliance, and strategic UK entry planning.",
+      "A Lagos-based immigration law firm operating from 56 Afolabi Aina Street off Allen Avenue, Ikeja, advising corporate organisations and private clients on complex visa applications, appeals, compliance, and strategic UK entry planning.",
     primaryCta: {
       label: "Book Consultation",
       href: "/book-consultation/"
@@ -28,7 +28,7 @@ export const homePage = {
     label: "Credentials",
     title: "Unparalleled Experience in UK Immigration Law",
     summary:
-      "Lawyersforvisa's immigration practice encompasses family visa applications, student visa applications, work visa applications, asylum cases, human rights law matters, and overstayer cases.",
+      "lawyersForvisa's Lagos-based immigration practice at 56 Afolabi Aina Street off Allen Avenue, Ikeja encompasses family visa applications, student visa applications, work visa applications, asylum cases, human rights law matters, and overstayer cases.",
     body: [
       "The principal partner has appeared at every tier of the Immigration and Asylum Chamber and is one of the few lawyers in private practice to have previously represented the Secretary of State in immigration proceedings.",
       "That background matters for clients whose applications, refusals, compliance obligations, or appeals require legal judgment rather than checklist processing."
@@ -157,7 +157,7 @@ export const homePage = {
     paragraphs: [
       "The Nigeria representative office gives clients a trusted local point of contact for introductions, scheduling, and pre-consultation coordination.",
       "All legal advisory work is managed from the UK. The Lagos office does not replace UK legal representation; it makes access to it easier and more structured.",
-      "This model gives clients the convenience of a local relationship and the assurance of UK-based legal oversight."
+      "This model gives clients the convenience of a local relationship at 56 Afolabi Aina Street off Allen Avenue, Ikeja and the assurance of UK immigration oversight."
     ],
     cta: {
       label: "Book Consultation",

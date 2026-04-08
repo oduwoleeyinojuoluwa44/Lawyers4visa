@@ -28,7 +28,7 @@ export const consultationNavigationCta: NavigationLink = {
 export const footerOffices: OfficeLocation[] = [
   {
     title: 'Nigeria Office Address:',
-    detail: 'Lagos, Nigeria. Meetings arranged by appointment.'
+    detail: '56 Afolabi Aina Street off Allen Avenue, Ikeja, Lagos, Nigeria. Meetings arranged by appointment.'
   },
   {
     title: 'UK Office Address:',

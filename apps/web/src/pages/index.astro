@@ -217,20 +217,26 @@ const iconSprites = {
           }
         </nav>
 
-        <div class="lv-header-cta-menu lv-button--header">
-          <a class="lv-button lv-button--header-cta lv-header-cta-menu__primary" href="/book-consultation/">
-            <span>Book Consultation</span>
-          </a>
-          <details class="lv-header-cta-menu__dropdown">
-            <summary class="lv-header-cta-menu__toggle" aria-label="Book consultation options">
+        <div class="lv-header-cta-menu" data-header-cta>
+          <div class="lv-header-cta-menu__row">
+            <a class="lv-header-cta-menu__primary" href="/book-consultation/">
+              <span>Book Consultation</span>
+            </a>
+            <button
+              class="lv-header-cta-menu__toggle"
+              type="button"
+              aria-expanded="false"
+              aria-controls="landing-header-cta-panel"
+              aria-label="Toggle consultation options"
+            >
               <span class="lv-button__icon" set:html={chevronDownIcon} />
-            </summary>
-            <div class="lv-header-cta-menu__panel" role="menu">
-              <a class="lv-header-cta-menu__item" href="/services/" role="menuitem">
-                Legal and compliance
-              </a>
-            </div>
-          </details>
+            </button>
+          </div>
+          <div class="lv-header-cta-menu__panel" id="landing-header-cta-panel" role="menu" hidden>
+            <a class="lv-header-cta-menu__item" href="/services/" role="menuitem">
+              Legal and compliance
+            </a>
+          </div>
         </div>
 
         <details class="lv-mobile-menu">
@@ -622,6 +628,39 @@ const iconSprites = {
         </div>
       </div>
     </footer>
+
+    <script is:inline>
+      {
+        (() => {
+          const menu = document.querySelector("[data-header-cta]");
+          if (!menu) return;
+
+          const toggle = menu.querySelector(".lv-header-cta-menu__toggle");
+          const panel = menu.querySelector(".lv-header-cta-menu__panel");
+          if (!(toggle instanceof HTMLButtonElement) || !(panel instanceof HTMLElement)) return;
+
+          const setOpen = (open) => {
+            toggle.setAttribute("aria-expanded", open ? "true" : "false");
+            panel.hidden = !open;
+            menu.classList.toggle("is-open", open);
+          };
+
+          toggle.addEventListener("click", () => {
+            const isOpen = toggle.getAttribute("aria-expanded") === "true";
+            setOpen(!isOpen);
+          });
+
+          document.addEventListener("click", (event) => {
+            if (!(event.target instanceof Node) || menu.contains(event.target)) return;
+            setOpen(false);
+          });
+
+          document.addEventListener("keydown", (event) => {
+            if (event.key === "Escape") setOpen(false);
+          });
+        })()
+      }
+    </script>
   </body>
 </html>
 

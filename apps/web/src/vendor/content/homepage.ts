@@ -253,7 +253,7 @@ export const homePage = {
     offices: [
       {
         title: "Nigeria Representative Office",
-        detail: "Lagos, Nigeria. Meetings arranged by appointment."
+        detail: "56 Afolabi Aina Street off Allen Avenue, Ikeja, Lagos, Nigeria. Meetings arranged by appointment."
       },
       {
         title: "UK Legal Office",
